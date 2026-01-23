@@ -1,0 +1,7 @@
+nav:
+  - Portable Home: index.md
+  - Core Docs: core-docs.md
+  - FHS / Layout: fhs.md
+  - Codex Basics: codex.md
+  - Bootstrap: bootstrap.md
+  - WSL Seed: wsl-seed.md
