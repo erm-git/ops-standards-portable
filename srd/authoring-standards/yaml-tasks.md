@@ -68,6 +68,11 @@ python3 scripts/yaml-task-lifecycle.py start yaml-tasks/todo/<task>.yml
 python3 scripts/yaml-task-lifecycle.py finish yaml-tasks/in-progress/<task>.yml
 ```
 
+## Commit discipline for task moves
+
+- After any lifecycle `git mv`, run `git add -u` to stage the move.
+- Once the task reaches `done/`, **commit immediately** before starting the next task.
+
 ## Example (slim)
 
 ```yaml
