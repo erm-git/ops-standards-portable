@@ -1,5 +1,5 @@
 ---
-title: "OpenAI Docs MCP Index (CGP SRD)"
+title: "OpenAI Docs MCP Index (Portable SRD)"
 status: "living"
 ---
 

@@ -1,11 +1,11 @@
 ---
-title: "Core Docs (CGP SRD)"
+title: "Core Docs (Portable SRD)"
 status: "standard"
 ---
 
 ## Core Docs (required set)
 
-Define the minimum “core docs” every CGP project should have, with clear responsibilities so docs don’t drift into duplicates:
+Define the minimum “core docs” every project should have, with clear responsibilities so docs don’t drift into duplicates:
 
 - `AGENTS.md` — agent onboarding + guardrails (repo root)
 - `README.md` — repo entrypoint (repo root)

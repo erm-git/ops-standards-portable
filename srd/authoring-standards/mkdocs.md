@@ -1,5 +1,5 @@
 ---
-title: "MkDocs Standards (CGP SRD)"
+title: "MkDocs Standards (Portable SRD)"
 status: "standard"
 ---
 

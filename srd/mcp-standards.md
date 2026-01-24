@@ -1,4 +1,4 @@
-# MCP Standards (Portable)
+# MCP Standards (Portable SRD)
 
 Goal: ensure Codex (CLI and IDE clients) can reliably use MCP servers with a consistent secrets workflow.
 
@@ -66,7 +66,7 @@ Add a short MCP policy block to each repo’s `AGENTS.md`:
 - when approvals are required
 - when to switch from local → remote
 
-Use the SRD-synced block template: `srd/agents-block.md` (sync with `scripts/sync-agents-portable.sh`).
+Use the SRD-synced block template: `srd/agents-block.md` (sync with `scripts/sync-agents-srd.sh`).
 
 ## Knowledgebase retrieval (KB MCP)
 
@@ -80,7 +80,7 @@ This repo includes a small KB server:
 Example:
 
 ```bash
-export OPS_SRD_ROOTS="docs=/opt/ops-standards/docs:srd=/opt/ops-standards/srd"
+export OPS_SRD_ROOTS="docs=/path/to/ops-standards/docs:srd=/path/to/ops-standards/srd"
 ```
 
 ## Why a dedicated KB server if repo-docs exists

@@ -1,5 +1,5 @@
 ---
-title: "Agent Workflow Templates (CGP SRD)"
+title: "Agent Workflow Templates (Portable SRD)"
 status: "standard"
 ---
 

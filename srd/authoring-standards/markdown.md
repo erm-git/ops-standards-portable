@@ -1,11 +1,11 @@
 ---
-title: "Markdown Standards (CGP SRD)"
+title: "Markdown Standards (Portable SRD)"
 status: "standard"
 ---
 
 ## Rules (summary)
 
-These rules apply to authored markdown under `docs/` in CGP project repos.
+These rules apply to authored markdown under `docs/` in project repos.
 
 - Use YAML front matter with `title:` for authored docs.
 - The first in-body heading should be `##` (H2).

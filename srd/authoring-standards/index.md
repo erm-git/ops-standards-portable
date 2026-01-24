@@ -7,7 +7,7 @@ status: "standard"
 
 These standards define how project repos should be structured, documented, and maintained.
 
-This content is intended to be retrieved via MCP by agents working in *other* repos, so those repos can conform to the SRD without copying docs into each repo.
+This content is intended to be retrieved via MCP (`ops_standards_srd`) by agents working in *other* repos, so those repos can conform to the SRD without copying docs into each repo.
 
 ## Start here
 
@@ -17,6 +17,7 @@ This content is intended to be retrieved via MCP by agents working in *other* re
 - MkDocs rules: `srd/authoring-standards/mkdocs.md`
 - YAML tasks rules: `srd/authoring-standards/yaml-tasks.md`
 - Python defaults: `srd/authoring-standards/python.md`
+- ETL project standard: `srd/authoring-standards/etl.md`
 - Scripting standards: `srd/authoring-standards/scripting.md`
 - Skills (SKILL.md) authoring: `srd/authoring-standards/skills.md`
 - VS Code practices: `srd/authoring-standards/vscode.md`

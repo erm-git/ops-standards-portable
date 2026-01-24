@@ -1,5 +1,5 @@
 ---
-title: "Codex (CGP SRD)"
+title: "Codex (Portable SRD)"
 status: "standard"
 ---
 

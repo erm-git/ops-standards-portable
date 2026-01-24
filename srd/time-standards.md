@@ -1,4 +1,4 @@
-# Time Standards (CGP)
+# Time Standards (Portable SRD)
 
 This document defines canonical timestamp rules used across ops workflows and tooling.
 

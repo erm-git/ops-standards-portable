@@ -1,5 +1,5 @@
 ---
-title: "MCP Servers Index (CGP SRD)"
+title: "MCP Servers Index (Portable SRD)"
 status: "living"
 ---
 

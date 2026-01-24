@@ -1,5 +1,5 @@
 ---
-title: "MCP Query Playbook (CGP SRD)"
+title: "MCP Query Playbook (Portable SRD)"
 status: "standard"
 ---
 

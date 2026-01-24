@@ -1,5 +1,5 @@
 ---
-title: "Standard Make Commands (CGP SRD)"
+title: "Standard Make Commands (Portable SRD)"
 status: "standard"
 ---
 

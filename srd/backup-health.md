@@ -1,5 +1,5 @@
 ---
-title: "Backup Health Checks (CGP SRD)"
+title: "Backup Health Checks (Portable SRD)"
 status: "standard"
 ---
 
@@ -39,7 +39,7 @@ restic snapshots
 restic check
 ```
 
-## Alert wiring (CGP convention)
+## Alert wiring (Portable SRD convention)
 
 Use systemd `OnFailure=` to notify on job failures.
 

@@ -1,5 +1,5 @@
 ---
-title: "Project Index (CGP SRD)"
+title: "Project Index (Portable SRD)"
 status: "living"
 ---
 

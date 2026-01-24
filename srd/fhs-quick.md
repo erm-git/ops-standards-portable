@@ -1,5 +1,5 @@
 ---
-title: "FHS Quick Reference (Portable)"
+title: "FHS Quick Reference (Portable SRD)"
 status: "standard"
 ---
 
@@ -16,8 +16,8 @@ status: "standard"
 
 ## Ownership policy (CCON)
 
-- `/opt/*` is **primary-user owned by default** so tools are usable without sudo.
-- `/srv/*` is **primary-user owned by default** for project data/mirrors.
+- `/opt/*` is **erm-owned by default** (including vendor trees) so tools are usable without sudo.
+- `/srv/*` is **erm-owned by default** for project data/mirrors.
 - `/usr`, `/var`, `/etc` remain **root-owned** unless a service explicitly requires otherwise.
 - If a service must run as root, keep its state under `/var` or `/var/opt` with root ownership.
 
@@ -26,7 +26,7 @@ status: "standard"
 Keep scripts in their repo, then install a **thin launcher** into `/usr/local/bin`:
 
 ```bash
-sudo ln -sf /opt/ops-standards/scripts/sync-agents-portable.sh /usr/local/bin/sync-agents-portable
+sudo ln -sf /opt/ops-standards/scripts/sync-agents-srd.sh /usr/local/bin/sync-agents-srd
 ```
 
 Example (read-only UFW status helper):

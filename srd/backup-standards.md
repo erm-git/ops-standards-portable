@@ -1,4 +1,4 @@
-# Backup Standards (CGP)
+# Backup Standards (Portable SRD)
 
 This doc standardizes a pragmatic backup model:
 

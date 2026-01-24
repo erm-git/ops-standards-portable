@@ -1,5 +1,5 @@
 ---
-title: "repo-docs + git-fork-sync (CGP)"
+title: "repo-docs + git-fork-sync (Portable SRD)"
 status: "standard"
 ---
 

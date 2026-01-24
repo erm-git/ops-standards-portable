@@ -6,7 +6,7 @@ status: "standard"
 ## Purpose
 
 This is the portable, host‑agnostic Standards Reference (SRD).
-It intentionally excludes CGP‑specific runbooks and inventories.
+It intentionally excludes Portable SRD‑specific runbooks and inventories.
 
 ## Included standards
 

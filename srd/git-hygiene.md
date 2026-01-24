@@ -20,10 +20,10 @@ Keep histories reviewable and mirrors/backups consistent.
 - Default branch: `main`
 - Avoid history rewrites on shared branches.
 
-## Remotes (local convention)
+## Remotes (Portable SRD convention)
 
 - `origin`: upstream host (e.g., GitHub)
-- `local`: local bare mirror under `/srv/git/<project>.git` (if you keep bare mirrors)
+- `local`: local bare mirror under `/srv/git/<project>.git`
 
 Example:
 

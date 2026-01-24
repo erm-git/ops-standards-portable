@@ -1,4 +1,4 @@
-# Secrets Standards (CGP)
+# Secrets Standards (Portable SRD)
 
 This document standardizes how secrets are stored, encrypted, loaded, and backed up on a host.
 It is written for environments where secrets must be available after reboot without an interactive unlock.

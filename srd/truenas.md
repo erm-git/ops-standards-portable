@@ -1,4 +1,4 @@
-# TrueNAS (CGP) — Ops Notes
+# TrueNAS (Portable SRD) — Ops Notes
 
 This page captures TrueNAS workflows in a way that stays “appliance-friendly”:
 
