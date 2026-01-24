@@ -1,4 +1,4 @@
-# MCP Standards (CGP)
+# MCP Standards (Portable)
 
 Goal: ensure Codex (CLI and IDE clients) can reliably use MCP servers with a consistent secrets workflow.
 
@@ -7,6 +7,12 @@ Goal: ensure Codex (CLI and IDE clients) can reliably use MCP servers with a con
 - Codex CLI MCP registry (recommended source of truth): `~/.codex/config.toml`
 
 Some environments also have an IDE-side MCP registry (for example VS Code Remote). If your IDE requires its own registry, treat `~/.codex/config.toml` as the source and sync it to the IDE registry.
+
+## MCP server placement (CCON)
+
+- Keep MCP server code in its repo (under `/srv/dev/<project>`).
+- Install stable entrypoints under `/opt/<project>` and symlink into `/usr/local/bin` (user tools) or `/usr/local/sbin` (services).
+- Do not store secrets in MCP configs; use env loaders only.
 
 ## Optional sync workflow
 
@@ -41,6 +47,7 @@ Use client-side controls to enforce tool safety:
 - **Local-first**: prefer local MCPs before remote/public MCPs.
 - **Approvals**: require approvals for tools that write files, run commands, or call paid APIs.
 - **Allowlist**: set allowed tools per repo (and per task) to prevent accidental tool usage.
+- **Paid APIs**: use Firecrawl only when explicitly requested (prefer SearxNG first).
 
 ### Standard env guard (local MCP)
 
@@ -67,13 +74,13 @@ For cross-repo reuse, expose ops-standards as a read-only knowledgebase via MCP.
 
 This repo includes a small KB server:
 
-- Entry point: `/opt/tools/ops-standards/ops_standards_srd_mcp_server.py`
+- Entry point: `/opt/ops-standards/scripts/ops_standards_srd_mcp_server.py`
 - Roots (allowlist): `OPS_SRD_ROOTS` (colon-separated `name=/path`)
 
 Example:
 
 ```bash
-export OPS_SRD_ROOTS="docs=/path/to/ops-standards/docs:srd=/path/to/ops-standards/srd"
+export OPS_SRD_ROOTS="docs=/opt/ops-standards/docs:srd=/opt/ops-standards/srd"
 ```
 
 ## Why a dedicated KB server if repo-docs exists

@@ -1,5 +1,5 @@
 ---
-title: "Ops Standards Guide (CGP SRD)"
+title: "Ops Standards Guide (Portable SRD)"
 status: "standard"
 ---
 

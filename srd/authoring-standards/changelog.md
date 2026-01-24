@@ -1,5 +1,5 @@
 ---
-title: "Changelog Standards (CGP SRD)"
+title: "Changelog Standards (Portable SRD)"
 status: "standard"
 ---
 
@@ -19,6 +19,12 @@ Skip noise:
 - tiny typo fixes
 - pure formatting reflows
 - internal refactors with no behavior change (unless they affect how to run/operate)
+
+Rule of thumb:
+
+- If a user/operator would care about the change, add it.
+- Update the changelog in the same change that introduces the behavior/policy shift.
+- Local-only artifacts (reports) do not go in the changelog.
 
 ## Format
 

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+codex_config="${1:-${HOME}/.codex/config.toml}"
+vscode_mcp_json="${2:-${HOME}/.vscode-server/data/User/mcp.json}"
+
+python3 "$(dirname "$0")/mcp_sync_vscode_from_codex.py" \
+  --codex-config "${codex_config}" \
+  --vscode-mcp-json "${vscode_mcp_json}" \
+  --write
+
+echo "Updated: ${vscode_mcp_json}"
+

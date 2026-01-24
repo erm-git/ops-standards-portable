@@ -1,5 +1,5 @@
 ---
-title: "VS Code Practices (CGP SRD)"
+title: "VS Code Practices (Portable SRD)"
 status: "standard"
 ---
 
@@ -30,3 +30,8 @@ Optional (only when used):
 
 - Formatting and linting should run with repo-standard commands (for example `make fmt`, `make lint`, `make test`).
 - Avoid editor-specific build logic when a CLI entrypoint exists.
+
+## Codex-friendly minimum
+
+- Tasks must run headless (no prompt/input blocks unless unavoidable).
+- Prefer task labels that match Make targets (`fmt`, `lint`, `test`, `type`).

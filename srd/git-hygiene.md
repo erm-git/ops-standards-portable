@@ -1,5 +1,5 @@
 ---
-title: "Git Hygiene (CGP SRD)"
+title: "Git Hygiene (Portable SRD)"
 status: "standard"
 ---
 
@@ -7,15 +7,23 @@ status: "standard"
 
 Keep histories reviewable and mirrors/backups consistent.
 
+## Short standard (TL;DR)
+
+- Default branch is `main`; do not rewrite shared history.
+- Use two remotes: `origin` (upstream) and `local` (`/srv/git/<project>.git`).
+- Prefer small, logical commits; split docs/code/config when practical.
+- Use concise, imperative commit messages.
+- `git review-ready` never commits or pushes; `git publish` stages + commits + pushes.
+
 ## Branch policy
 
 - Default branch: `main`
 - Avoid history rewrites on shared branches.
 
-## Remotes (CGP convention)
+## Remotes (local convention)
 
 - `origin`: upstream host (e.g., GitHub)
-- `local`: local bare mirror under `/srv/git/<project>.git`
+- `local`: local bare mirror under `/srv/git/<project>.git` (if you keep bare mirrors)
 
 Example:
 

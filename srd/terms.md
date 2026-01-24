@@ -1,5 +1,5 @@
 ---
-title: "Terms (CGP SRD)"
+title: "Terms (Portable SRD)"
 status: "standard"
 ---
 
@@ -31,6 +31,18 @@ If you need to emphasize “process vs repo,” use:
 - **Git review-ready**: stage-only review bundle; no branch changes, rebases, resets, cleans, commits, or pushes.
 - **Git checkpoint**: local commit only; no push.
 - **Git publish**: stage + commit + push (to the configured remotes) to keep the working tree clean and make the current state durable.
+
+## Standard phrases (CCON)
+
+Use these words consistently across repos and runbooks:
+
+- **Repo**: a git repository (source of truth for code/config/docs).
+- **Worktree**: a working checkout (usually under `/srv/dev/<project>`).
+- **Runtime install**: stable entrypoints/wrappers (usually `/opt/<project>`).
+- **Runtime state**: databases, caches, indexes, logs (usually `/var/opt/<project>` or `/srv/<project>`).
+- **Mirror**: a bare git repo copy (usually `/srv/git/<project>.git`).
+- **Pointer doc**: a short doc that links to SRD canonical content.
+- **Seeded doc**: a copy from SRD that is then customized per repo.
 
 ## BP and CCON
 

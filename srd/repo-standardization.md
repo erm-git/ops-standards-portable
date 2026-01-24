@@ -1,5 +1,5 @@
 ---
-title: "Bring Repos Up to Standard (CGP SRD)"
+title: "Bring Repos Up to Standard (Portable SRD)"
 status: "standard"
 ---
 
@@ -14,7 +14,8 @@ Upgrade a repo to current standards without breaking existing conventions.
 3) **Normalize format** of existing docs to current authoring standards (front matter, headings, bullets, code fences).  
 4) **Add pointer docs** for system‑wide standards (do not copy unless customization is required).  
 5) **Ensure standard Make targets** exist (or document why not).  
-6) **Stop at `git review-ready`** for human approval.
+6) **Sync the SRD block** in `AGENTS.md` with `scripts/sync-agents-portable.sh`.  
+7) **Stop at `git review-ready`** for human approval.
 
 ## Core docs contract (presence check)
 
@@ -53,6 +54,7 @@ Reference: `srd/authoring-standards/markdown.md`
 
 - Core docs set present (`AGENTS.md`, `README.md`, `CHANGELOG.md`, `docs/index.md`, `docs/current-state.md`, `docs/roadmap.md`, `docs/active-work.md`).
 - `AGENTS.md` points to SRD and does not conflict with SRD policy.
+- `AGENTS.md` SRD block is synced via `scripts/sync-agents-portable.sh`.
 - `AGENTS.md` includes repo MCP policy (allowed MCPs + approvals) per `srd/mcp-standards.md`.
 - Add pointer docs for system-wide standards (do not copy unless repo must customize).
   - `docs/backup-standards.md`
