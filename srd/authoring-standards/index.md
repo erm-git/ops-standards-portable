@@ -17,7 +17,6 @@ This content is intended to be retrieved via MCP (`ops_standards_srd`) by agents
 - MkDocs rules: `srd/authoring-standards/mkdocs.md`
 - YAML tasks rules: `srd/authoring-standards/yaml-tasks.md`
 - Python defaults: `srd/authoring-standards/python.md`
-- ETL project standard: `srd/authoring-standards/etl.md`
 - Scripting standards: `srd/authoring-standards/scripting.md`
 - Skills (SKILL.md) authoring: `srd/authoring-standards/skills.md`
 - VS Code practices: `srd/authoring-standards/vscode.md`

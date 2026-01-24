@@ -25,6 +25,7 @@ Core standards:
 - `srd/ops-standards-guide.md`
 - `srd/openai-docs-index.md`
 - `srd/project-index.md`
+- `srd/project-types/index.md`
 - `srd/repo-docs.md`
 - `srd/repo-standardization.md`
 - `srd/secrets-standards.md`
