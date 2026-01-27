@@ -29,13 +29,13 @@ On this machine those variables are populated by `~/.config/secrets/load.sh` (so
 
 ## Local servers (stdio, run as a local process)
 
-These are installed under `/opt/tools` (or symlinked from there) and are started by your MCP client using a `command` + `args` config.
+These are installed under `/opt/<project>` and are started by your MCP client using a `command` + `args` config.
 
 ### GitHub (local)
 
 - **Codex name:** `github_search_local`
 - **VS Code Remote name:** `github_search_local`
-- **Entry point:** `/opt/tools/github-search/mcp_server.py`
+- **Entry point:** `/opt/github-search/mcp_server.py`
 - **What it does:** lightweight GitHub discovery/search helpers (wrapping local scripts like `gh-api-search` / `gh-etl-scout`)
 - **Notes:** uses `GITHUB_TOKEN` (directly or via `gh auth token`) for API access; does not attempt to mirror the full GitHub platform toolset.
 
@@ -43,28 +43,27 @@ These are installed under `/opt/tools` (or symlinked from there) and are started
 
 - **Codex name:** `huggingface_local`
 - **VS Code Remote name:** `huggingface_local`
-- **Entry point (symlink):** `/opt/tools/hugging-face/huggingface_mcp_server.py`
-- **Real path:** `/opt/llm-stack/hf-tools/huggingface_mcp_server.py`
+- **Entry point:** `/opt/llm-stack/hf-tools/huggingface_mcp_server.py`
 - **What it does:** Hugging Face Hub search + metadata + controlled local downloads (e.g. download a file/snapshot into allowed write roots)
 - **Key env:** `HF_TOKEN` (optional), `HF_HOME`, `HF_HUB_CACHE`, `HF_DOWNLOAD_ROOT`, `HF_MCP_WRITE_ROOTS`
 
-### Other local MCP servers shipped under /opt/tools
+### Other local MCP servers shipped under /opt/<project>
 
 These are also used by Codex on this machine (see `~/.codex/config.toml` for exact names/env):
 
-- `/opt/tools/searxng/searxng_mcp_server.py` — local SearxNG web search
-- `/opt/tools/catacomb-core-planner/searxng_mcp_server.py` — SearxNG web search (planner-flavored wrapper)
-- `/opt/tools/catacomb-core-planner/text_etl_core_mcp_server.py` — text-etl CPU workflows (planner-flavored wrapper)
-- `/opt/tools/catacomb-core-planner/text_etl_gpu_mcp_server.py` — text-etl GPU workflows (planner-flavored wrapper)
-- `/opt/tools/repo-docs/mcp_server.py` — local indexed docs search/read for `/srv/dev/repo-docs`
-- `/opt/tools/rpg-srd/docs/mcp_server.py` — local indexed SRD search/read for `/srv/dev/rpg-srd`
-- `/opt/tools/rpg-srd/docs/rpg_srd_text_etl_mcp_server.py` — rpg-srd ETL workflows
-- `/opt/tools/text-etl/text_etl_core_mcp_server.py` — text-etl CPU workflows
-- `/opt/tools/text-etl/text_etl_gpu_mcp_server.py` — text-etl GPU workflows
-- `/opt/tools/reddit-mcp/mcp_server.py` — reddit ingestion (PRAW via text-etl CLI)
-- `/opt/tools/catacomb-core/mcp_server.py` — catacomb-core helpers (docs/YAML access + harness/test wrappers)
-- `/opt/tools/czkawka/mcp_server.py` — safe duplicate-finder wrappers (policy/allowlist guarded)
-- `/opt/tools/firecrawl/mcp_server.py` and `/opt/tools/firecrawl/credit_mcp_server.py` — Firecrawl integration (paid; avoid unless explicitly requested)
+- `/opt/searxng/searxng_mcp_server.py` — local SearxNG web search
+- `/opt/catacomb-core-planner/searxng_mcp_server.py` — SearxNG web search (planner-flavored wrapper)
+- `/opt/catacomb-core-planner/text_etl_core_mcp_server.py` — text-etl CPU workflows (planner-flavored wrapper)
+- `/opt/catacomb-core-planner/text_etl_gpu_mcp_server.py` — text-etl GPU workflows (planner-flavored wrapper)
+- `/opt/repo-docs/mcp_server.py` — local indexed docs search/read for `/srv/dev/repo-docs`
+- `/opt/rpg-srd/mcp_server.py` — local indexed SRD search/read for `/srv/dev/rpg-srd`
+- `/opt/rpg-srd/rpg_srd_text_etl_mcp_server.py` — rpg-srd ETL workflows
+- `/opt/text-etl/text_etl_core_mcp_server.py` — text-etl CPU workflows
+- `/opt/text-etl/text_etl_gpu_mcp_server.py` — text-etl GPU workflows
+- `/opt/reddit-mcp/mcp_server.py` — reddit ingestion (PRAW via text-etl CLI)
+- `/opt/catacomb-core/mcp_server.py` — catacomb-core helpers (docs/YAML access + harness/test wrappers)
+- `/opt/czkawka/mcp_server.py` — safe duplicate-finder wrappers (policy/allowlist guarded)
+- `/opt/firecrawl/mcp_server.py` and `/opt/firecrawl/credit_mcp_server.py` — Firecrawl integration (paid; avoid unless explicitly requested)
 
 ## Official/public servers (HTTP, hosted)
 

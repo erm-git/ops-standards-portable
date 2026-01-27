@@ -5,7 +5,7 @@ status: "standard"
 
 ## System locations (cheat sheet)
 
-- **`/opt/tools/`**: local MCP servers and shared tooling
+- **`/opt/<project>/`**: installed project runtimes (including MCP servers)
 - **`/usr/local/bin/`**: user-managed CLI entrypoints (preferred over `/usr/bin`)
 - **`/usr/local/sbin/`**: system scripts run by services/timers
 - **`/srv/dev/`**: active git worktrees

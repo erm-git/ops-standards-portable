@@ -15,26 +15,34 @@ sudo hostnamectl set-hostname wsl-ubuntu-24-04
 
 If you set a hostname, add it to `/etc/hosts` and restart WSL.
 
-## Clone ops-standards (read-only)
+## Tracking clone + live copy (portable standard)
 
-Use SSH if you have keys configured, otherwise HTTPS.
-
-```bash
-git clone git@github.com:erm-git/ops-standards.git /opt/ops-standards
-cd /opt/ops-standards
-git remote set-url --push origin no_push
-```
-
-## Local bare repo (same pattern as CGP)
+Tracking clone:
 
 ```bash
-sudo mkdir -p /srv/git
-sudo chown "$USER":"$USER" /srv/git
-git clone --bare /opt/ops-standards /srv/git/ops-standards.git
-cd /opt/ops-standards
-git remote add local /srv/git/ops-standards.git
-git push local main
+sudo mkdir -p /srv/dev
+sudo chown "$USER":"$USER" /srv/dev
+git clone git@github.com:erm-git/ops-standards-portable.git /srv/dev/ops-standards-portable
 ```
+
+Live copy (the canonical WSL path):
+
+```bash
+sudo mkdir -p /opt/ops-standards
+sudo chown "$USER":"$USER" /opt/ops-standards
+rsync -a --delete /srv/dev/ops-standards-portable/ /opt/ops-standards/
+```
+
+Update flow (manual review before apply):
+
+```bash
+cd /srv/dev/ops-standards-portable
+git pull --ff-only
+diff -ruN /opt/ops-standards /srv/dev/ops-standards-portable | less
+rsync -a --delete /srv/dev/ops-standards-portable/ /opt/ops-standards/
+```
+
+Do not edit `/opt/ops-standards` directly. Use the tracking clone.
 
 ## Move a project to /opt (example)
 

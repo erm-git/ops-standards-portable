@@ -12,11 +12,11 @@ Goal: ensure Codex (CLI and IDE clients) can reliably use MCP servers with a con
 - Update Codex MCP registry: `~/.codex/config.toml`
 - Update systemd units: `/etc/systemd/system/*.service` and `*.timer`
 - Update wrappers: `/usr/local/bin` and `/usr/local/sbin`
-- Update repo scripts/configs: scan `/srv/dev` and `/opt` for `/opt/tools` references
+- Update repo scripts/configs: scan `/srv/dev` and `/opt` for legacy MCP paths
 - Update docs: `srd/docs/tools/mcp-servers-index.md` and related MCP docs
-- Create compatibility symlinks: `/opt/tools/<name>` -> `/opt/<project>`
+- Create compatibility symlinks if legacy paths exist
 - Validate MCP clients can start servers under new paths
-- Remove legacy aliases and `/opt/tools` symlinks only after validation
+- Remove legacy aliases/symlinks only after validation
 
 ## Portable Defaults
 
@@ -133,7 +133,7 @@ For cross-repo reuse, expose ops-standards as a read-only knowledgebase via MCP.
 
 This repo includes a small KB server:
 
-- Entry point: `/opt/tools/ops-standards/ops_standards_srd_mcp_server.py`
+- Entry point: `/opt/ops-standards/scripts/ops_standards_srd_mcp_server.py`
 - Roots (allowlist): `OPS_SRD_ROOTS` (colon-separated `name=/path`)
 
 Example:

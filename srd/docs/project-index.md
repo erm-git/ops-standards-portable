@@ -13,7 +13,7 @@ System-wide index of projects and ownership for agents.
 
 - /opt/finance-etl
 - /opt/llm-stack
-- /opt/tools/text-etl
+- /opt/text-etl
 - /opt/vscode-etl
 
 ### /srv/dev
