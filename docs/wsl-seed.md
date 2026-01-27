@@ -1,11 +1,11 @@
 ---
-title: "WSL Seed (Portable)"
+title: "Linux Seed (Portable)"
 status: "standard"
 ---
 
 ## Goal
 
-Seed a WSL system with the same baseline layout used on CGP, without installing CGP-specific packages.
+Seed a Linux host (including WSL) with the same baseline layout used on CGP, without installing CGP-specific packages.
 
 ## WSL hostname (optional)
 
@@ -25,7 +25,7 @@ sudo chown "$USER":"$USER" /srv/dev
 git clone git@github.com:erm-git/ops-standards-portable.git /srv/dev/ops-standards-portable
 ```
 
-Live copy (the canonical WSL path):
+Live copy (the canonical path on this host):
 
 ```bash
 sudo mkdir -p /opt/ops-standards
