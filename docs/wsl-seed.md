@@ -44,6 +44,13 @@ rsync -a --delete /srv/dev/ops-standards-portable/ /opt/ops-standards/
 
 Do not edit `/opt/ops-standards` directly. Use the tracking clone.
 
+## Update discipline (no drift)
+
+- Only pull updates in `/srv/dev/ops-standards-portable`.
+- `/opt/ops-standards` is live copy only (never edit it directly).
+- Always review diffs before syncing.
+- Apply changes via `rsync -a --delete` only after review.
+
 ## Move a project to /opt (example)
 
 If a project is currently under `~/projects/<name>`:
