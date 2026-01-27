@@ -3,12 +3,14 @@ title: "AGENTS.md System Block (SRD)"
 status: "standard"
 ---
 
-<!-- PORTABLE:BEGIN -->
-## Portable Standards
+<!-- SRD:BEGIN -->
+## System Standards (SRD)
 
-This block is synced from `portable-srd/srd/docs/policies/agents-block.md`. Do not edit here.
+This block is synced from `srd/docs/policies/agents-block.md`. Do not edit here.
 
-- Portable standards: `portable-srd/docs/index.md`
-- Portable SRD: `portable-srd/srd/docs/index.md`
-- Install path is host-specific (typical: `/opt/ops-standards/`).
-<!-- PORTABLE:END -->
+- Canonical standards: `srd/docs/`
+- MCP policy: `srd/docs/policies/mcp-standards.md`
+- MCP query playbook: `srd/docs/tools/mcp-query-playbook.md`
+- Firecrawl is paid — do not use unless explicitly requested.
+- If `MCP_REQUIRE_CONFIRM=1`, pass `confirm=true` for write/exec tools.
+<!-- SRD:END -->

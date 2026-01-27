@@ -2,14 +2,14 @@
 set -euo pipefail
 
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
-BLOCK_FILE="${ROOT}/srd/agents-block.md"
+BLOCK_FILE="${ROOT}/srd/docs/policies/agents-block.md"
 
 usage() {
   cat <<'EOF'
 Usage: sync-agents-portable.sh <AGENTS.md> [<AGENTS.md> ...]
 
-Replaces the portable block between:
-  <!-- PORTABLE:BEGIN --> ... <!-- PORTABLE:END -->
+Replaces the SRD block between:
+  <!-- SRD:BEGIN --> ... <!-- SRD:END -->
 
 If markers are missing, the block is prepended.
 EOF
@@ -21,13 +21,13 @@ if [[ $# -lt 1 ]]; then
 fi
 
 if [[ ! -f "${BLOCK_FILE}" ]]; then
-  echo "Missing portable block: ${BLOCK_FILE}" >&2
+  echo "Missing SRD block: ${BLOCK_FILE}" >&2
   exit 1
 fi
 
-BLOCK_CONTENT="$(sed -n '/<!-- PORTABLE:BEGIN -->/,/<!-- PORTABLE:END -->/p' "${BLOCK_FILE}")"
+BLOCK_CONTENT="$(sed -n '/<!-- SRD:BEGIN -->/,/<!-- SRD:END -->/p' "${BLOCK_FILE}")"
 if [[ -z "${BLOCK_CONTENT}" ]]; then
-  echo "Portable block markers not found in ${BLOCK_FILE}" >&2
+  echo "SRD block markers not found in ${BLOCK_FILE}" >&2
   exit 1
 fi
 
@@ -37,22 +37,22 @@ for target in "$@"; do
     continue
   fi
 
-  cleaned="$(mktemp)"
-  awk '
-    BEGIN { skip=0 }
-    /<!-- SRD:BEGIN -->/ { skip=1; next }
-    /<!-- SRD:END -->/ { skip=0; next }
-    /<!-- PORTABLE:BEGIN -->/ { skip=1; next }
-    /<!-- PORTABLE:END -->/ { skip=0; next }
-    { if (!skip) print }
-  ' "${target}" > "${cleaned}"
-
-  tmp="$(mktemp)"
-  {
-    echo "${BLOCK_CONTENT}"
-    echo
-    cat "${cleaned}"
-  } > "${tmp}"
-  mv "${tmp}" "${target}"
-  rm -f "${cleaned}"
+  if rg -q "<!-- SRD:BEGIN -->" "${target}" && rg -q "<!-- SRD:END -->" "${target}"; then
+    tmp="$(mktemp)"
+    awk -v block="${BLOCK_CONTENT}" '
+      BEGIN { in_block=0 }
+      /<!-- SRD:BEGIN -->/ { print block; in_block=1; next }
+      /<!-- SRD:END -->/ { in_block=0; next }
+      { if (!in_block) print }
+    ' "${target}" > "${tmp}"
+    mv "${tmp}" "${target}"
+  else
+    tmp="$(mktemp)"
+    {
+      echo "${BLOCK_CONTENT}"
+      echo
+      cat "${target}"
+    } > "${tmp}"
+    mv "${tmp}" "${target}"
+  fi
 done
