@@ -47,6 +47,13 @@ rsync -a --delete /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/
 rsync -a /srv/dev/ops-standards-portable/VERSION /opt/ops-standards/VERSION
 ```
 
+Optional helper (same flow, dry-run by default):
+
+```bash
+LIVE_ROOT=/opt/ops-standards scripts/sync-from-upstream.sh --live "$LIVE_ROOT"
+LIVE_ROOT=/opt/ops-standards scripts/sync-from-upstream.sh --live "$LIVE_ROOT" --apply
+```
+
 Do not edit `/opt/ops-standards` directly. Use the tracking clone.
 `/opt/ops-standards` is not expected to match upstream git commits.
 Use `VERSION` plus the `srd/` and `templates/` diffs to confirm sync.

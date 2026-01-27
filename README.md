@@ -51,6 +51,7 @@ Tracking clone + live copy (partial sync only):
 - `docs/index.md` for the portable docs landing page.
 - `docs/bootstrap.md` for bootstrap details.
 - `docs/core-docs.md` for the core docs contract.
+- `docs/linux-seed.md` for the tracking clone + live copy update model.
 
 ## Bootstrap a repo (Codex skill)
 

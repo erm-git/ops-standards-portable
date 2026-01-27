@@ -99,5 +99,6 @@ if [[ "${APPLY}" != "1" ]]; then
 fi
 
 install_skill "portable-ops-bootstrap" 1
+install_skill "portable-ops-sync" 0
 install_skill "ops-new-workspace" 1
 install_skill "codex-session-bootstrap" 0
