@@ -1,0 +1,17 @@
+site_name: Ops Standards Portable SRD
+repo_name: ops-standards-portable
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: readthedocs
+
+plugins:
+  - search
+  - awesome-pages:
+      filename: .nav.yml
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
