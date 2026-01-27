@@ -28,6 +28,14 @@ CGP-specific standards live in the private ops-standards repo.
 - `docs/codex.md`
 - `docs/wsl-seed.md`
 
+## Update model (portable installs)
+
+Portable installs use a tracking clone plus a live copy:
+
+- Tracking clone: `/srv/dev/ops-standards-portable` (pull updates here)
+- Live copy: `/opt/ops-standards` (used by the host)
+- Sync only: `srd/`, `templates/`, and `VERSION` (no full-repo rsync)
+
 ## Offline standards copy
 
 This portable bundle includes an offline copy of host-agnostic standards under:

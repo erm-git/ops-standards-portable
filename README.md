@@ -38,6 +38,14 @@ single-user boxes).
 - `codex/skills/portable-ops-bootstrap/` — Codex skill wrapper for the bootstrap script
 - `VERSION` — portable bundle version
 
+## Update model for host installs
+
+Tracking clone + live copy (partial sync only):
+
+- Tracking clone: `/srv/dev/ops-standards-portable`
+- Live copy: `/opt/ops-standards`
+- Sync only: `srd/`, `templates/`, and `VERSION` (no full-repo rsync)
+
 ## Docs and references
 
 - `docs/index.md` for the portable docs landing page.

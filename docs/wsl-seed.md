@@ -17,7 +17,7 @@ If you set a hostname, add it to `/etc/hosts` and restart WSL.
 
 ## Tracking clone + live copy (portable standard)
 
-Tracking clone:
+Tracking clone (source of truth):
 
 ```bash
 sudo mkdir -p /srv/dev
@@ -25,12 +25,14 @@ sudo chown "$USER":"$USER" /srv/dev
 git clone git@github.com:erm-git/ops-standards-portable.git /srv/dev/ops-standards-portable
 ```
 
-Live copy (the canonical path on this host):
+Live copy (host-used path, partial sync only):
 
 ```bash
 sudo mkdir -p /opt/ops-standards
 sudo chown "$USER":"$USER" /opt/ops-standards
-rsync -a --delete /srv/dev/ops-standards-portable/ /opt/ops-standards/
+rsync -a --delete /srv/dev/ops-standards-portable/srd/ /opt/ops-standards/srd/
+rsync -a --delete /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates/
+rsync -a /srv/dev/ops-standards-portable/VERSION /opt/ops-standards/VERSION
 ```
 
 Update flow (manual review before apply):
@@ -38,18 +40,23 @@ Update flow (manual review before apply):
 ```bash
 cd /srv/dev/ops-standards-portable
 git pull --ff-only
-diff -ruN /opt/ops-standards /srv/dev/ops-standards-portable | less
-rsync -a --delete /srv/dev/ops-standards-portable/ /opt/ops-standards/
+diff -ruN /opt/ops-standards/srd /srv/dev/ops-standards-portable/srd | less
+diff -ruN /opt/ops-standards/templates /srv/dev/ops-standards-portable/templates | less
+rsync -a --delete /srv/dev/ops-standards-portable/srd/ /opt/ops-standards/srd/
+rsync -a --delete /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates/
+rsync -a /srv/dev/ops-standards-portable/VERSION /opt/ops-standards/VERSION
 ```
 
 Do not edit `/opt/ops-standards` directly. Use the tracking clone.
+`/opt/ops-standards` is not expected to match upstream git commits.
+Use `VERSION` plus the `srd/` and `templates/` diffs to confirm sync.
 
 ## Update discipline (no drift)
 
 - Only pull updates in `/srv/dev/ops-standards-portable`.
 - `/opt/ops-standards` is live copy only (never edit it directly).
-- Always review diffs before syncing.
-- Apply changes via `rsync -a --delete` only after review.
+- Review diffs for `srd/` and `templates/` only.
+- Sync only `srd/`, `templates/`, and `VERSION` (no full-repo rsync).
 
 ## Move a project to /opt (example)
 
