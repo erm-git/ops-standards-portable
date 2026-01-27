@@ -26,7 +26,7 @@ CGP-specific standards live in the private ops-standards repo.
 - `docs/fhs.md`
 - `docs/bootstrap.md`
 - `docs/codex.md`
-- `docs/wsl-seed.md`
+- `docs/linux-seed.md`
 
 ## Update model (portable installs)
 
