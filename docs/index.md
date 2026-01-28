@@ -32,9 +32,11 @@ CGP-specific standards live in the private ops-standards repo.
 
 Portable installs use a tracking clone plus a live copy:
 
-- Tracking clone: `/srv/dev/ops-standards-portable` (pull updates here)
+- Tracking clone: `/opt/ops-standards-portable` (pull updates here)
 - Live copy: `/opt/ops-standards` (used by the host)
-- Sync only: `srd/`, `templates/`, and `VERSION` (no full-repo rsync)
+
+**Do not rsync portable `srd/` into local `srd/`.**
+Portable updates flow through **SRD block sync** only.
 
 ## Offline standards copy
 

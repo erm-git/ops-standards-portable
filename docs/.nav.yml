@@ -4,4 +4,4 @@ nav:
   - FHS / Layout: fhs.md
   - Codex Basics: codex.md
   - Bootstrap: bootstrap.md
-  - WSL Seed: wsl-seed.md
+  - Linux Seed: linux-seed.md

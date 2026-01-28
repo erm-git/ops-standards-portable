@@ -40,11 +40,11 @@ single-user boxes).
 
 ## Update model for host installs
 
-Tracking clone + live copy (partial sync only):
+Tracking clone + live copy (no SRD rsync):
 
-- Tracking clone: `/srv/dev/ops-standards-portable`
+- Tracking clone: `/opt/ops-standards-portable`
 - Live copy: `/opt/ops-standards`
-- Sync only: `srd/`, `templates/`, and `VERSION` (no full-repo rsync)
+- Updates flow via **SRD block sync** only (no rsync into local `srd/`).
 
 ## Docs and references
 

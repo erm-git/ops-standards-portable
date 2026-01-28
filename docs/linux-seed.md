@@ -17,53 +17,88 @@ If you set a hostname, add it to `/etc/hosts` and restart WSL.
 
 ## Tracking clone + live copy (portable standard)
 
-Tracking clone (source of truth):
+Tracking clone (portable baseline):
 
 ```bash
-sudo mkdir -p /srv/dev
-sudo chown "$USER":"$USER" /srv/dev
-git clone git@github.com:erm-git/ops-standards-portable.git /srv/dev/ops-standards-portable
+sudo mkdir -p /opt/ops-standards-portable
+sudo chown "$USER":"$USER" /opt/ops-standards-portable
+
+git clone git@github.com:erm-git/ops-standards-portable.git /opt/ops-standards-portable
 ```
 
-Live copy (host-used path, partial sync only):
+Live copy (host-used path):
 
 ```bash
 sudo mkdir -p /opt/ops-standards
 sudo chown "$USER":"$USER" /opt/ops-standards
-rsync -a --delete /srv/dev/ops-standards-portable/srd/ /opt/ops-standards/srd/
-rsync -a --delete /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates/
-rsync -a /srv/dev/ops-standards-portable/VERSION /opt/ops-standards/VERSION
 ```
 
-Update flow (manual review before apply):
+### Important rule (no rsync into local SRD)
+
+Do **not** `rsync --delete` portable `srd/` into local `srd/`. That overwrites host‑local SRD additions.
+
+Portable updates flow through **SRD block sync** only.
+
+## Host-local SRD additions (safe)
+
+Keep host‑specific SRD additions here:
+
+```
+/opt/ops-standards/srd/docs/<host>/...
+```
+
+This folder is never overwritten by portable updates.
+
+## SRD block sync model (portable → local)
+
+Core docs and templates receive portable updates **only** inside SRD blocks:
+
+```
+<!-- SRD:BEGIN -->
+...portable content...
+<!-- SRD:END -->
+```
+
+Rules:
+
+- Portable repo is the source of truth for the SRD block.
+- Local files keep everything **outside** the block.
+- If a file is missing markers, the sync skips it (and logs).
+- No deletions are applied to local files.
+
+## Update flow (manual review before apply)
 
 ```bash
-cd /srv/dev/ops-standards-portable
+cd /opt/ops-standards-portable
+
 git pull --ff-only
-diff -ruN /opt/ops-standards/srd /srv/dev/ops-standards-portable/srd | less
-diff -ruN /opt/ops-standards/templates /srv/dev/ops-standards-portable/templates | less
-rsync -a --delete /srv/dev/ops-standards-portable/srd/ /opt/ops-standards/srd/
-rsync -a --delete /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates/
-rsync -a /srv/dev/ops-standards-portable/VERSION /opt/ops-standards/VERSION
+
+# Optional: review updates in the portable baseline
+# (block sync will only update SRD blocks in local core docs/templates)
+
+/opt/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards
+/opt/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards --apply
 ```
 
-Optional helper (same flow, dry-run by default):
+The sync script:
 
-```bash
-LIVE_ROOT=/opt/ops-standards scripts/sync-from-upstream.sh --live "$LIVE_ROOT"
-LIVE_ROOT=/opt/ops-standards scripts/sync-from-upstream.sh --live "$LIVE_ROOT" --apply
-```
+- updates SRD blocks in the core docs set
+- logs missing markers instead of overwriting
+- updates `VERSION`
 
-Do not edit `/opt/ops-standards` directly. Use the tracking clone.
-`/opt/ops-standards` is not expected to match upstream git commits.
-Use `VERSION` plus the `srd/` and `templates/` diffs to confirm sync.
+## Core docs SRD‑block targets
 
-## Update discipline (no drift)
+These files should contain SRD block markers on the host:
 
-- Only pull updates in `/srv/dev/ops-standards-portable`.
-- `/opt/ops-standards` is live copy only (never edit it directly).
-- Review diffs for `srd/` and `templates/` only.
-- Sync only `srd/`, `templates/`, and `VERSION` (no full-repo rsync).
+- `AGENTS.md`
+- `README.md`
+- `CHANGELOG.md`
+- `docs/index.md`
+- `docs/current-state.md`
+- `docs/roadmap.md`
+- `docs/active-work.md` (optional)
+
+If any file lacks markers, add them once, then rerun block sync.
 
 ## Move a project to /opt (example)
 

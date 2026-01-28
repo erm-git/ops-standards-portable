@@ -19,9 +19,34 @@ This is the minimal documentation set we standardize across repos so work stays 
 
 ## Optional files (`docs/`)
 
-- `docs/active-work.md`: WIP scratchpad for the current session/run of sessions (not required reading)
+- `docs/active-work.md`: current work only (1–3 items max; point to YAML tasks)
 
-## How to use `current-state.md` vs `active-work.md`
+## SRD block markers (portable updates)
 
-- `docs/current-state.md`: stable, canonical, updated when behavior/workflows change.
-- `docs/active-work.md`: temporary scratchpad (strike through done items; wipe when complete).
+Portable updates apply **only** to SRD blocks inside the core docs set.
+
+Marker format:
+
+```
+<!-- SRD:BEGIN -->
+...portable content...
+<!-- SRD:END -->
+```
+
+Rules:
+
+- Portable repo is the source of truth for the SRD block.
+- Local files keep everything **outside** the block.
+- If a file is missing markers, block sync skips it (and logs).
+
+## Core docs block-sync targets
+
+These files should include SRD markers:
+
+- `AGENTS.md`
+- `README.md`
+- `CHANGELOG.md`
+- `docs/index.md`
+- `docs/current-state.md`
+- `docs/roadmap.md`
+- `docs/active-work.md` (optional)
