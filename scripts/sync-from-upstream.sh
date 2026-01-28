@@ -70,6 +70,32 @@ if [[ -f "${LIVE_ROOT}/VERSION" ]]; then
   live_version="$(cat "${LIVE_ROOT}/VERSION")"
 fi
 
+core_targets=(
+  "${LIVE_ROOT}/AGENTS.md"
+  "${LIVE_ROOT}/README.md"
+  "${LIVE_ROOT}/CHANGELOG.md"
+  "${LIVE_ROOT}/docs/index.md"
+  "${LIVE_ROOT}/docs/current-state.md"
+  "${LIVE_ROOT}/docs/roadmap.md"
+)
+
+existing_core=0
+for path in "${core_targets[@]}"; do
+  if [[ -f "${path}" ]]; then
+    existing_core=$((existing_core+1))
+  fi
+done
+
+if [[ "${existing_core}" -eq 0 ]]; then
+  echo "ERROR: live root appears empty (no core docs present)."
+  echo "Seed templates first, then re-run block sync."
+  echo "Example:"
+  echo "  rsync -a \"${TRACKING_ROOT}/templates/repo-root/\" \"${LIVE_ROOT}/\""
+  echo "  mkdir -p \"${LIVE_ROOT}/docs\""
+  echo "  rsync -a \"${TRACKING_ROOT}/templates/docs/\" \"${LIVE_ROOT}/docs/\""
+  exit 3
+fi
+
 echo "Tracking root: ${TRACKING_ROOT}"
 echo "Live root: ${LIVE_ROOT}"
 echo "Tracking VERSION: ${tracking_version}"

@@ -57,6 +57,8 @@ rsync -a "${TRACKING_ROOT}/templates/" "${LIVE_ROOT}/templates/"
 "${TRACKING_ROOT}/scripts/sync-from-upstream.sh" --live "${LIVE_ROOT}" --apply
 ```
 
+Block sync only updates files that already exist; it will skip empty live roots.
+
 ## Codex session workflow (target host)
 
 1) Open VS Code workspace containing:

@@ -145,6 +145,7 @@ The sync script:
 - updates SRD blocks in the core docs set
 - logs missing markers instead of overwriting
 - updates `VERSION`
+- does **not** create missing files (empty live roots will be skipped)
 
 ## Existing host update (short form)
 
