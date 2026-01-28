@@ -101,3 +101,8 @@ Gain context from ${TRACKING_ROOT} and implement that process into ${LIVE_ROOT} 
 
 Do **not** `rsync --delete` portable `srd/` into local `srd/`.
 Portable updates flow through SRD block sync only.
+
+## Hard rules (seed/update + reporting)
+
+- Only run `seed-live.sh`. Do **not** run `sync-from-upstream.sh` directly.
+- Reports must list **only** the allowed commands from this file. No extras.

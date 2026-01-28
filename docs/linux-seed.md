@@ -81,6 +81,8 @@ git -C "${LIVE_ROOT}" push --mirror local
 
 - Do **not** `rsync --delete` portable `srd/` into local `srd/`.
 - Do **not** run `sync-from-upstream.sh` directly (it is already called by `seed-live.sh`).
+- Only run `seed-live.sh` for seed/update.
+- Reports must list **only** the allowed commands in this document. No extras.
 
 ## Host-local SRD additions (safe)
 
