@@ -47,29 +47,13 @@ sudo mkdir -p "${LIVE_ROOT}"
 sudo chown "$USER":"$USER" "${LIVE_ROOT}"
 ```
 
-Step 3 — bootstrap live copy (required)
+Step 3 — seed live copy (required; do not improvise)
 
 ```bash
-"${TRACKING_ROOT}/scripts/bootstrap.sh" \
-  --target "${LIVE_ROOT}" \
-  --title "Ops Standards (Local)" \
-  --one-line "Local standards and references for this host" \
-  --purpose "Local standards repo seeded from portable baseline, with host-specific additions."
+"${TRACKING_ROOT}/scripts/seed-live.sh" --live "${LIVE_ROOT}" --apply
 ```
 
-Step 4 — template copy (required)
-
-Templates must exist in the live copy (so SRD block updates apply there too):
-
-```bash
-mkdir -p "${LIVE_ROOT}/templates"
-rsync -a "${TRACKING_ROOT}/templates/" "${LIVE_ROOT}/templates/"
-ls -la "${LIVE_ROOT}/templates"
-```
-
-Do not skip this. Template SRD blocks require these files to exist.
-
-Step 5 — optional: install sync script in live copy
+Step 4 — optional: install sync script in live copy
 
 If you want a stable path under `${LIVE_ROOT}/scripts/`:
 

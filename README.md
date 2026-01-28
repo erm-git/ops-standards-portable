@@ -34,7 +34,7 @@ single-user boxes).
 ## Contents
 
 - `templates/` — template files to copy into a target repo
-- `scripts/bootstrap.sh` — seeds a target repo with these templates
+- `scripts/seed-live.sh` — seeds a live ops-standards copy (repo root + docs + templates + SRD block sync)
 - `codex/skills/codex-new-project/` — Codex skill to seed a new project
 - `VERSION` — portable bundle version
 
@@ -45,7 +45,15 @@ Tracking clone + live copy (no SRD rsync):
 - Tracking clone: `${TRACKING_ROOT}` (defaults in `docs/linux-seed.md`)
 - Live copy: `${LIVE_ROOT}` (defaults in `docs/linux-seed.md`)
 - Updates flow via **SRD block sync** only (no rsync into local `srd/`).
-- Required template copy: sync `templates/` into `/opt/ops-standards/templates/` so template SRD blocks can update.
+- Use `scripts/seed-live.sh` for seeding (do not improvise).
+
+## Seed a host (live ops-standards)
+
+Use this when seeding `/opt/ops-standards` from a tracking clone:
+
+```bash
+scripts/seed-live.sh --live /opt/ops-standards --apply
+```
 
 ## Docs and references
 

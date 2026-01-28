@@ -43,14 +43,15 @@ sudo mkdir -p "${LIVE_ROOT}"
 sudo chown "$USER":"$USER" "${LIVE_ROOT}"
 ```
 
-3) Template copy (required):
+3) Seed live copy (required; do not improvise):
+
+Run the seed script (this enforces all required steps):
 
 ```bash
-mkdir -p "${LIVE_ROOT}/templates"
-rsync -a "${TRACKING_ROOT}/templates/" "${LIVE_ROOT}/templates/"
+"${TRACKING_ROOT}/scripts/seed-live.sh" --live "${LIVE_ROOT}" --apply
 ```
 
-4) Run SRD block sync (portable → live):
+4) Block sync (portable → live):
 
 ```bash
 "${TRACKING_ROOT}/scripts/sync-from-upstream.sh" --live "${LIVE_ROOT}"

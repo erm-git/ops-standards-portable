@@ -52,6 +52,14 @@ if [[ ! -d "${LIVE_ROOT}" ]]; then
   exit 2
 fi
 
+if [[ ! -d "${LIVE_ROOT}/templates" ]]; then
+  echo "ERROR: templates missing under live root: ${LIVE_ROOT}/templates" >&2
+  echo "Seed templates first, then re-run block sync." >&2
+  echo "Example:"
+  echo "  rsync -a \"${TRACKING_ROOT}/templates/\" \"${LIVE_ROOT}/templates/\"" >&2
+  exit 3
+fi
+
 run_cmd() {
   if [[ -n "${REPORT}" ]]; then
     "$@" | tee -a "${REPORT}"
