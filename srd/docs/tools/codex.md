@@ -1,9 +1,9 @@
 ---
-title: "Codex (CGP SRD)"
+title: "Codex (SRD)"
 status: "standard"
 ---
 
-This page is the **portable ops-standards reference** for using Codex as a coding agent.
+This page is the portable ops-standards reference for using Codex as a coding agent.
 
 ## Scope
 
@@ -61,8 +61,9 @@ Portable custom skills live in this repo under `codex/skills/`.
 Install/update them into `$CODEX_HOME/skills` with:
 
 ```bash
-cd /path/to/ops-standards
-scripts/install-codex-skills.sh --apply
+TRACKING_ROOT="/srv/dev/ops-standards-portable"
+cd "${TRACKING_ROOT}"
+scripts/install-codex-skill.sh --apply
 ```
 
 ## MCP (Tools + KB)
