@@ -43,6 +43,20 @@ rsync -a /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates
 ls -la /opt/ops-standards/templates
 ```
 
+If you skip this, template block sync will skip templates (no targets).
+
+### Optional: install sync script in live copy
+
+If you want a stable path under `/opt/ops-standards/scripts/`:
+
+```bash
+mkdir -p /opt/ops-standards/scripts
+cp /srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh /opt/ops-standards/scripts/
+
+# Use tracking clone as source when running from live copy
+/opt/ops-standards/scripts/sync-from-upstream.sh --live /opt/ops-standards --tracking /srv/dev/ops-standards-portable
+```
+
 ### Important rule (no rsync into local SRD)
 
 Do **not** `rsync --delete` portable `srd/` into local `srd/`. That overwrites host‑local SRD additions.
@@ -58,6 +72,18 @@ Keep host‑specific SRD additions here:
 ```
 
 This folder is never overwritten by portable updates.
+
+### Host-local SRD stub (optional)
+
+```bash
+HOST_SLUG="my-host"
+mkdir -p "/opt/ops-standards/srd/docs/${HOST_SLUG}"
+cat > "/opt/ops-standards/srd/docs/${HOST_SLUG}/README.md" <<'EOF'
+# Host SRD (local)
+
+This folder contains host-specific SRD additions.
+EOF
+```
 
 ## SRD block sync model (portable → local)
 

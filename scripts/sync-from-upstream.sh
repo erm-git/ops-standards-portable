@@ -113,10 +113,10 @@ def block_span(text: str):
     return (b, e)
 
 if not SRC.exists():
-    print(f"SKIP missing source: {SRC}")
+    print(f"SKIP_SOURCE|missing source: {SRC}")
     sys.exit(0)
 if not DST.exists():
-    print(f"SKIP missing target: {DST}")
+    print(f"SKIP_TARGET|missing target: {DST}")
     sys.exit(0)
 
 src_text = read_text(SRC)
@@ -126,34 +126,52 @@ src_span = block_span(src_text)
 dst_span = block_span(dst_text)
 
 if not src_span:
-    print(f"SKIP missing SRD block in source: {SRC}")
+    print(f"SKIP_SRC_BLOCK|missing SRD block in source: {SRC}")
     sys.exit(0)
 if not dst_span:
-    print(f"SKIP missing SRD block in target: {DST}")
+    print(f"SKIP_DST_BLOCK|missing SRD block in target: {DST}")
     sys.exit(0)
 
 src_block = src_text[src_span[0]:src_span[1]]
 dst_block = dst_text[dst_span[0]:dst_span[1]]
 
 if src_block == dst_block:
-    print(f"OK no change: {DST}")
+    print(f"OK|no change: {DST}")
     sys.exit(0)
 
 if APPLY:
     new_text = dst_text[:dst_span[0]] + src_block + dst_text[dst_span[1]:]
     DST.write_text(new_text, encoding="utf-8")
-    print(f"UPDATED SRD block: {DST}")
+    print(f"UPDATED|SRD block updated: {DST}")
 else:
-    print(f"WOULD UPDATE SRD block: {DST}")
+    print(f"WOULD_UPDATE|SRD block would update: {DST}")
 PY
 }
+
+updated=0
+would_update=0
+no_change=0
+skip_source=0
+skip_target=0
+skip_src_block=0
+skip_dst_block=0
 
 for entry in "${MAPS[@]}"; do
   target_rel="${entry%%::*}"
   source_rel="${entry##*::}"
   src_path="${TRACKING_ROOT}/${source_rel}"
   dst_path="${LIVE_ROOT}/${target_rel}"
-  run_cmd python_block_sync "${src_path}" "${dst_path}" "${APPLY}"
+  out="$(python_block_sync "${src_path}" "${dst_path}" "${APPLY}")"
+  run_cmd echo "${out}"
+  case "${out}" in
+    UPDATED* ) updated=$((updated+1)) ;;
+    WOULD_UPDATE* ) would_update=$((would_update+1)) ;;
+    OK* ) no_change=$((no_change+1)) ;;
+    SKIP_SOURCE* ) skip_source=$((skip_source+1)) ;;
+    SKIP_TARGET* ) skip_target=$((skip_target+1)) ;;
+    SKIP_SRC_BLOCK* ) skip_src_block=$((skip_src_block+1)) ;;
+    SKIP_DST_BLOCK* ) skip_dst_block=$((skip_dst_block+1)) ;;
+  esac
 
 done
 
@@ -166,3 +184,5 @@ else
     run_cmd echo "VERSION: would update ${LIVE_ROOT}/VERSION"
   fi
 fi
+
+echo \"Summary: updated=${updated} would_update=${would_update} no_change=${no_change} skip_source=${skip_source} skip_target=${skip_target} skip_src_block=${skip_src_block} skip_dst_block=${skip_dst_block}\"

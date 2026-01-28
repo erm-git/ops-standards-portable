@@ -33,6 +33,22 @@ These files have specific meanings. Do not repurpose them.
 - `CHANGELOG.md`: notable user/operator-facing changes (not every small internal edit).
 - `docs/scratchpad.md` + `docs/scratchpad/` (optional): unstructured notes only (not canonical).
 
+## SRD block markers (portable updates)
+
+When portable updates need to flow into local core docs without clobbering host‑specific content, use SRD block markers:
+
+```
+<!-- SRD:BEGIN -->
+...portable content...
+<!-- SRD:END -->
+```
+
+Rules:
+
+- Portable repo is the source of truth for the SRD block.
+- Local files keep everything **outside** the block.
+- If a file is missing markers, the updater skips it (and logs).
+
 ## Update discipline (expected cadence)
 
 - `docs/active-work.md`: update every session (start/end)
