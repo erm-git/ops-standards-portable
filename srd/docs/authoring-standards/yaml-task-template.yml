@@ -1,0 +1,23 @@
+id: ""
+title: ""
+filename: ""
+milestone: ""
+branch: ""
+status: ""
+entrypoint: ""
+related: []
+scope:
+  touch_only: []
+  allow_new: []
+  do_not_edit: []
+goals: []
+non_goals: []
+implementation_notes: []
+acceptance_checks: []
+tests: []
+docs_discipline: []
+git_flow: []
+completion:
+  summary: ""
+  tests: []
+  notes: []
