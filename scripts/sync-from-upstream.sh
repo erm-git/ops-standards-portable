@@ -8,7 +8,7 @@ TRACKING_ROOT=""
 
 usage() {
   cat <<'USAGE'
-Sync portable content (srd/, templates/, VERSION) from tracking clone to live copy.
+Sync portable SRD blocks from tracking clone into a live copy (no rsync overwrite).
 
 Usage:
   scripts/sync-from-upstream.sh --live /opt/ops-standards
@@ -42,7 +42,7 @@ if [[ -z "${LIVE_ROOT}" ]]; then
   exit 2
 fi
 
-if [[ ! -d "${TRACKING_ROOT}/srd" || ! -d "${TRACKING_ROOT}/templates" || ! -f "${TRACKING_ROOT}/VERSION" ]]; then
+if [[ ! -d "${TRACKING_ROOT}/templates" || ! -f "${TRACKING_ROOT}/VERSION" ]]; then
   echo "ERROR: tracking root missing required paths: ${TRACKING_ROOT}" >&2
   exit 2
 fi
@@ -50,11 +50,6 @@ fi
 if [[ ! -d "${LIVE_ROOT}" ]]; then
   echo "ERROR: live root not found: ${LIVE_ROOT}" >&2
   exit 2
-fi
-
-rsync_args=(-a --delete --itemize-changes)
-if [[ "${APPLY}" != "1" ]]; then
-  rsync_args+=(--dry-run)
 fi
 
 run_cmd() {
@@ -73,8 +68,94 @@ echo "Tracking root: ${TRACKING_ROOT}"
 echo "Live root: ${LIVE_ROOT}"
 echo "Mode: $([[ "${APPLY}" == "1" ]] && echo apply || echo dry-run)"
 
-run_cmd rsync "${rsync_args[@]}" "${TRACKING_ROOT}/srd/" "${LIVE_ROOT}/srd/"
-run_cmd rsync "${rsync_args[@]}" "${TRACKING_ROOT}/templates/" "${LIVE_ROOT}/templates/"
+declare -a MAPS=(
+  "AGENTS.md::templates/repo-root/AGENTS.md"
+  "README.md::templates/repo-root/README.md"
+  "CHANGELOG.md::templates/repo-root/CHANGELOG.md"
+  "docs/index.md::templates/docs/index.md"
+  "docs/current-state.md::templates/docs/current-state.md"
+  "docs/roadmap.md::templates/docs/roadmap.md"
+  "docs/active-work.md::templates/docs/active-work.md"
+  "templates/repo-root/AGENTS.md::templates/repo-root/AGENTS.md"
+  "templates/repo-root/README.md::templates/repo-root/README.md"
+  "templates/repo-root/CHANGELOG.md::templates/repo-root/CHANGELOG.md"
+  "templates/docs/index.md::templates/docs/index.md"
+  "templates/docs/current-state.md::templates/docs/current-state.md"
+  "templates/docs/roadmap.md::templates/docs/roadmap.md"
+  "templates/docs/active-work.md::templates/docs/active-work.md"
+)
+
+python_block_sync() {
+  local src="$1"
+  local dst="$2"
+  local apply="$3"
+  python3 - "$src" "$dst" "$apply" <<'PY'
+import io
+import sys
+from pathlib import Path
+
+SRC = Path(sys.argv[1])
+DST = Path(sys.argv[2])
+APPLY = sys.argv[3] == "1"
+
+BEGIN = "<!-- SRD:BEGIN -->"
+END = "<!-- SRD:END -->"
+
+def read_text(p: Path):
+    return p.read_text(encoding="utf-8")
+
+def block_span(text: str):
+    b = text.find(BEGIN)
+    e = text.find(END)
+    if b == -1 or e == -1 or e < b:
+        return None
+    e = e + len(END)
+    return (b, e)
+
+if not SRC.exists():
+    print(f"SKIP missing source: {SRC}")
+    sys.exit(0)
+if not DST.exists():
+    print(f"SKIP missing target: {DST}")
+    sys.exit(0)
+
+src_text = read_text(SRC)
+dst_text = read_text(DST)
+
+src_span = block_span(src_text)
+dst_span = block_span(dst_text)
+
+if not src_span:
+    print(f"SKIP missing SRD block in source: {SRC}")
+    sys.exit(0)
+if not dst_span:
+    print(f"SKIP missing SRD block in target: {DST}")
+    sys.exit(0)
+
+src_block = src_text[src_span[0]:src_span[1]]
+dst_block = dst_text[dst_span[0]:dst_span[1]]
+
+if src_block == dst_block:
+    print(f"OK no change: {DST}")
+    sys.exit(0)
+
+if APPLY:
+    new_text = dst_text[:dst_span[0]] + src_block + dst_text[dst_span[1]:]
+    DST.write_text(new_text, encoding="utf-8")
+    print(f"UPDATED SRD block: {DST}")
+else:
+    print(f"WOULD UPDATE SRD block: {DST}")
+PY
+}
+
+for entry in "${MAPS[@]}"; do
+  target_rel="${entry%%::*}"
+  source_rel="${entry##*::}"
+  src_path="${TRACKING_ROOT}/${source_rel}"
+  dst_path="${LIVE_ROOT}/${target_rel}"
+  run_cmd python_block_sync "${src_path}" "${dst_path}" "${APPLY}"
+
+done
 
 if [[ "${APPLY}" == "1" ]]; then
   run_cmd cp "${TRACKING_ROOT}/VERSION" "${LIVE_ROOT}/VERSION"

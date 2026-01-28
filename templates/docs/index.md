@@ -2,6 +2,15 @@
 title: "{{PROJECT_TITLE}}"
 ---
 
+<!-- SRD:BEGIN -->
+## System Standards (SRD)
+
+This block is synced from the portable core docs. Do not edit here.
+
+- This index should list the canonical docs and standards for the repo.
+- SRD block sync updates this section only.
+<!-- SRD:END -->
+
 ## Start here
 
 - `docs/current-state.md`

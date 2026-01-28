@@ -3,26 +3,21 @@ title: "Active Work"
 status: "wip"
 ---
 
-## Usage
+<!-- SRD:BEGIN -->
+## SRD Policy
 
-- WIP scratchpad for the current session (or a short run of sessions).
-- Strike through items as they are completed.
-- When everything is done, wipe this file and start fresh.
+Active work tracks **current** work only (1–3 items max).
+Each item must point to a YAML task file.
+<!-- SRD:END -->
 
-## Snapshot
+## Active
 
-- last_updated_run_id: YYYYMMDDTHHMMSSZ
-- objective: TODO
+- TODO: add 1–3 current items (each links to a YAML task)
 
-## Active Work
+## Paused
 
-- in_progress: TODO
-- next: TODO
+- TODO (optional)
 
-## Blockers
+## Recently Completed
 
-- blocker_1: none
-
-## Next Human Action
-
-- next_action: TODO
+- TODO (optional)

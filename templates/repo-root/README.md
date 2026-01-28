@@ -2,6 +2,15 @@
 
 {{PROJECT_ONE_LINE}}
 
+<!-- SRD:BEGIN -->
+## System Standards (SRD)
+
+This block is synced from the portable core docs. Do not edit here.
+
+- Core docs: `AGENTS.md`, `docs/index.md`, `docs/current-state.md`, `docs/roadmap.md`
+- SRD block sync updates this section only.
+<!-- SRD:END -->
+
 ## Start here
 
 - `AGENTS.md`

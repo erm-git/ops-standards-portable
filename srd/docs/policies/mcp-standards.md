@@ -1,4 +1,4 @@
-# MCP Standards (CGP)
+# MCP Standards (Portable)
 
 Goal: ensure Codex (CLI and IDE clients) can reliably use MCP servers with a consistent secrets workflow.
 
@@ -136,10 +136,13 @@ This repo includes a small KB server:
 - Entry point: `/opt/ops-standards/scripts/ops_standards_srd_mcp_server.py`
 - Roots (allowlist): `OPS_SRD_ROOTS` (colon-separated `name=/path`)
 
+On target hosts, **SRD is local** (`/opt/ops-standards/srd/docs`).
+Portable updates flow into local SRD via SRD block sync, not rsync.
+
 Example:
 
 ```bash
-export OPS_SRD_ROOTS="docs=/path/to/ops-standards/docs:srd=/path/to/ops-standards/srd/docs:portable_docs=/path/to/ops-standards/portable-srd/docs:portable_srd=/path/to/ops-standards/portable-srd/srd/docs"
+export OPS_SRD_ROOTS="srd=/opt/ops-standards/srd/docs"
 ```
 
 ## Why a dedicated KB server if repo-docs exists
@@ -149,4 +152,4 @@ export OPS_SRD_ROOTS="docs=/path/to/ops-standards/docs:srd=/path/to/ops-standard
 An ops-standards KB server is intentionally smaller:
 
 - it targets the canonical standards/runbook repo directly
-- it avoids needing an indexing pipeline for “read/search docs now”
+- it avoids needing an indexing pipeline for “read/search docs now"
