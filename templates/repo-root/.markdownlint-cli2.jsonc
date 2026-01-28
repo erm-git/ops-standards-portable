@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint-cli2/main/schema/markdownlint-cli2-config-schema.json",
+  "globs": [
+    "README.md",
+    "docs/**/*.md",
+    "!docs/debugging/test-baseline/**",
+    "!docs/notes/**",
+    "!docs/scratchpad.md",
+    "!docs/docs-a/**",
+    "!docs/docs-b/**",
+    "!docs/docs-c/**",
+    "!docs/homework/done/**"
+  ],
+  "config": {
+    "default": true,
+    "MD003": { "style": "consistent" },
+    "MD007": false,
+    "MD009": { "br_spaces": 0 },
+    "MD012": { "maximum": 2 },
+    "MD013": false,
+    "MD024": { "siblings_only": true },
+    "MD025": { "level": 1 },
+    "MD026": { "punctuation": ".,;:!?" },
+    "MD032": false,
+    "MD033": false,
+    "MD041": false,
+    "MD046": { "style": "fenced" }
+  }
+}
+

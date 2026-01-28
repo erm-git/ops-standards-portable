@@ -19,6 +19,11 @@ Writes (skipping any files that already exist):
   AGENTS.md
   README.md
   CHANGELOG.md
+  .editorconfig
+  .gitignore
+  .markdownlint-cli2.jsonc
+  .markdownlint.json
+  .markdownlintignore
   .vscode/settings.json
   .vscode/extensions.json
   docs/index.md
@@ -125,6 +130,11 @@ declare -a FILES=(
   "repo-root/AGENTS.md::AGENTS.md"
   "repo-root/README.md::README.md"
   "repo-root/CHANGELOG.md::CHANGELOG.md"
+  "repo-root/.editorconfig::.editorconfig"
+  "repo-root/.gitignore::.gitignore"
+  "repo-root/.markdownlint-cli2.jsonc::.markdownlint-cli2.jsonc"
+  "repo-root/.markdownlint.json::.markdownlint.json"
+  "repo-root/.markdownlintignore::.markdownlintignore"
   "repo-root/.vscode/settings.json::.vscode/settings.json"
   "repo-root/.vscode/extensions.json::.vscode/extensions.json"
   "docs/index.md::docs/index.md"
