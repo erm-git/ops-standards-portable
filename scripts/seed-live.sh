@@ -72,8 +72,20 @@ echo "Tracking root: ${TRACKING_ROOT}"
 echo "Live root: ${LIVE_ROOT}"
 echo "Tracking VERSION: ${tracking_version}"
 
-sudo mkdir -p "${LIVE_ROOT}"
-sudo chown "$USER":"$USER" "${LIVE_ROOT}"
+if [[ ! -d "${LIVE_ROOT}" ]]; then
+  echo "ERROR: live root not found: ${LIVE_ROOT}" >&2
+  echo "Create it once, then re-run:" >&2
+  echo "  sudo mkdir -p \"${LIVE_ROOT}\"" >&2
+  echo "  sudo chown \"$USER:$USER\" \"${LIVE_ROOT}\"" >&2
+  exit 3
+fi
+
+if [[ ! -w "${LIVE_ROOT}" ]]; then
+  echo "ERROR: live root not writable: ${LIVE_ROOT}" >&2
+  echo "Fix ownership, then re-run:" >&2
+  echo "  sudo chown \"$USER:$USER\" \"${LIVE_ROOT}\"" >&2
+  exit 3
+fi
 
 "${TRACKING_ROOT}/scripts/bootstrap.sh" \
   --target "${LIVE_ROOT}" \

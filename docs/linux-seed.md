@@ -52,6 +52,7 @@ Step 3 — seed/update live copy (required; do not improvise):
 Notes:
 - `seed-live.sh` pulls the tracking clone by default; use `--no-pull` only if you are offline.
 - `seed-live.sh` performs template seeding, SRD block sync (dry‑run + apply), and VERSION verification.
+- `seed-live.sh` does **not** run sudo; `${LIVE_ROOT}` must already exist and be writable.
 
 Step 4 — verify:
 

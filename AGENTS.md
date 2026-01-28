@@ -56,6 +56,7 @@ sudo chown "$USER":"$USER" "${LIVE_ROOT}"
 Notes:
 - `seed-live.sh` performs template seeding, SRD block sync (dry‑run + apply), and VERSION verification.
 - `seed-live.sh` pulls the tracking clone by default; use `--no-pull` only if you are offline.
+- `seed-live.sh` does **not** run sudo; `${LIVE_ROOT}` must already exist and be writable.
 - Do not run `sync-from-upstream.sh` separately; it is already called by `seed-live.sh`.
 
 ## Codex session workflow (target host)
