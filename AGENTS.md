@@ -61,6 +61,7 @@ Notes:
 - `seed-live.sh` pulls the tracking clone by default; use `--no-pull` only if you are offline.
 - `seed-live.sh` does **not** run sudo; `${LIVE_ROOT}` must already exist and be writable.
 - Do not run `sync-from-upstream.sh` separately; it is already called by `seed-live.sh`.
+- `seed-live.sh` writes a deterministic report file under `${LIVE_ROOT}/reports/` by default.
 
 4) Optional (manual, last step only) — local git repo on target host:
 
@@ -105,4 +106,4 @@ Portable updates flow through SRD block sync only.
 ## Hard rules (seed/update + reporting)
 
 - Only run `seed-live.sh`. Do **not** run `sync-from-upstream.sh` directly.
-- Reports must list **only** the allowed commands from this file. No extras.
+- Reports must be the **verbatim** `seed-live.sh` report file. No narrative summaries.

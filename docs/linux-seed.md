@@ -55,6 +55,7 @@ Notes:
 - `seed-live.sh` pulls the tracking clone by default; use `--no-pull` only if you are offline.
 - `seed-live.sh` performs template seeding, SRD block sync (dry‑run + apply), and VERSION verification.
 - `seed-live.sh` does **not** run sudo; `${LIVE_ROOT}` must already exist and be writable.
+- `seed-live.sh` writes a deterministic report file under `${LIVE_ROOT}/reports/` by default.
 
 Step 4 — verify:
 
@@ -82,7 +83,7 @@ git -C "${LIVE_ROOT}" push --mirror local
 - Do **not** `rsync --delete` portable `srd/` into local `srd/`.
 - Do **not** run `sync-from-upstream.sh` directly (it is already called by `seed-live.sh`).
 - Only run `seed-live.sh` for seed/update.
-- Reports must list **only** the allowed commands in this document. No extras.
+- Reports must be the **verbatim** `seed-live.sh` report file. No narrative summaries.
 
 ## Host-local SRD additions (safe)
 
