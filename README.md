@@ -42,7 +42,7 @@ Use these docs exactly (no improvisation):
 
 - `templates/` — template files to copy into a target repo
 - `scripts/bootstrap.sh` — seeds a target repo with these templates
-- `codex/skills/portable-ops-bootstrap/` — Codex skill wrapper for the bootstrap script
+- `codex/skills/codex-new-project/` — Codex skill to seed a new project
 - `VERSION` — portable bundle version
 
 ## Update model for host installs
@@ -69,7 +69,7 @@ Install the vendored skills into `$CODEX_HOME/skills`:
 scripts/install-codex-skill.sh --apply
 ```
 
-Then ask Codex to run the `portable-ops-bootstrap` skill.
+Then ask Codex to run the `codex-new-project` skill.
 
 ## Offline standards copy
 

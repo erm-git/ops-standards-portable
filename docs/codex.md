@@ -43,11 +43,10 @@ Portable skill install (recommended):
 scripts/install-codex-skill.sh --apply
 ```
 
-Installs:
+Installs (global skills bundled here):
 
-- `portable-ops-bootstrap`
-- `ops-new-workspace` (portable)
-- `codex-session-bootstrap`
+- `codex-new-project`
+- `codex-new-session`
 
 ## Safety posture
 

@@ -61,7 +61,7 @@ rsync -a /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates
 3) Start Codex:
 
 ```
-ops-standards-0100 $codex-session-bootstrap
+ops-standards-0100 $codex-new-session
 ```
 
 4) Initial instruction to agent:

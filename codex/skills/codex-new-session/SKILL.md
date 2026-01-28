@@ -1,5 +1,5 @@
 ---
-name: codex-session-bootstrap
+name: codex-new-session
 description: "Bootstrap new Codex IDE sessions by prompting for CODEX_SESSION_NAME/CODEX_SESSION_ID/CWD and handling later corrections."
 ---
 

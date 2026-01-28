@@ -1,13 +1,13 @@
 ---
-name: ops-new-workspace
-description: "Seed a repo with portable core docs using the portable bootstrap (host-agnostic)."
+name: codex-new-project
+description: "Seed a repo with core docs using the standard bootstrap."
 metadata:
   short-description: Bootstrap core docs (portable)
 ---
 
-# Ops New-Workspace (portable)
+# Codex New-Project
 
-Use this skill to start a new project/workspace directory with the **portable** core docs set.
+Use this skill to start a new project directory with the core docs set.
 
 ## What it does
 
@@ -20,5 +20,5 @@ Use this skill to start a new project/workspace directory with the **portable** 
 Run the bundled helper:
 
 ```bash
-codex/skills/ops-new-workspace/scripts/newworkspace.sh
+codex/skills/codex-new-project/scripts/newproject.sh
 ```

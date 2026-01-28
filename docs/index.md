@@ -52,4 +52,4 @@ This portable bundle includes an offline copy of host-agnostic standards under:
 ## Bootstrap
 
 - Script: `scripts/bootstrap.sh`
-- Codex skill: `portable-ops-bootstrap` (install via `scripts/install-codex-skill.sh --apply`)
+- Codex skill: `codex-new-project` (install via `scripts/install-codex-skill.sh --apply`)
