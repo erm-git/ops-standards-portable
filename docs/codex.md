@@ -37,7 +37,7 @@ Install location:
 
 Reference: `https://developers.openai.com/codex/skills`
 
-Portable skill install (recommended):
+Skill install (recommended):
 
 ```bash
 scripts/install-codex-skill.sh --apply

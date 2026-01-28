@@ -16,47 +16,54 @@ This block is synced from `srd/docs/policies/agents-block.md`. Do not edit here.
 This file is the single entrypoint for agents on a target host.
 Follow the steps exactly. Do not improvise.
 
+## Path defaults (override only if required)
+
+```bash
+TRACKING_ROOT="/srv/dev/ops-standards-portable"
+LIVE_ROOT="/opt/ops-standards"
+```
+
 ## Required procedure (new or existing host)
 
-Precondition: `/opt/ops-standards` already exists and was bootstrapped by a human.
-If not, stop and ask the human to follow the steps in `docs/linux-seed.md` first.
+If `${LIVE_ROOT}` does not exist, execute the steps in `docs/linux-seed.md` first.
+Then return here and continue.
 
 1) Clone portable baseline (tracking clone):
 
 ```bash
-sudo mkdir -p /srv/dev/ops-standards-portable
-sudo chown "$USER":"$USER" /srv/dev/ops-standards-portable
-git clone git@github.com:erm-git/ops-standards-portable.git /srv/dev/ops-standards-portable
+sudo mkdir -p "${TRACKING_ROOT}"
+sudo chown "$USER":"$USER" "${TRACKING_ROOT}"
+git clone git@github.com:erm-git/ops-standards-portable.git "${TRACKING_ROOT}"
 ```
 
 2) Ensure live copy exists:
 
 ```bash
-sudo mkdir -p /opt/ops-standards
-sudo chown "$USER":"$USER" /opt/ops-standards
+sudo mkdir -p "${LIVE_ROOT}"
+sudo chown "$USER":"$USER" "${LIVE_ROOT}"
 ```
 
 3) Optional template copy (recommended):
 
 ```bash
-mkdir -p /opt/ops-standards/templates
-rsync -a /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates/
+mkdir -p "${LIVE_ROOT}/templates"
+rsync -a "${TRACKING_ROOT}/templates/" "${LIVE_ROOT}/templates/"
 ```
 
 4) Run SRD block sync (portable → live):
 
 ```bash
-/srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards
-/srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards --apply
+"${TRACKING_ROOT}/scripts/sync-from-upstream.sh" --live "${LIVE_ROOT}"
+"${TRACKING_ROOT}/scripts/sync-from-upstream.sh" --live "${LIVE_ROOT}" --apply
 ```
 
 ## Codex session workflow (target host)
 
 1) Open VS Code workspace containing:
-   - `/opt/ops-standards` (live copy)
-   - `/srv/dev/ops-standards-portable` (tracking clone)
+   - `${LIVE_ROOT}` (live copy)
+   - `${TRACKING_ROOT}` (tracking clone)
 
-2) Set CWD to `/opt/ops-standards`.
+2) Set CWD to `${LIVE_ROOT}`.
 
 3) Start Codex:
 
@@ -67,7 +74,7 @@ ops-standards-0100 $codex-new-session
 4) Initial instruction to agent:
 
 ```
-Gain context from /srv/dev/ops-standards-portable and implement that process into /opt/ops-standards on this system, then pause.
+Gain context from ${TRACKING_ROOT} and implement that process into ${LIVE_ROOT} on this system, then pause.
 ```
 
 ## Rule (no destructive rsync into SRD)

@@ -3,7 +3,7 @@ set -euo pipefail
 
 SKILL_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 
-# Preferred: vendored portable bundle when installed via install-codex-skill.sh
+# Preferred: vendored bundle when installed via install-codex-skill.sh
 bootstrap="${SKILL_ROOT}/vendor/scripts/bootstrap.sh"
 
 # Fallback: running from an ops-standards checkout

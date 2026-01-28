@@ -19,13 +19,6 @@ Note: if you create host-level directories with `sudo` (for example under
 user/service account (commonly `sudo chown -R "$USER:$USER" <path>` on
 single-user boxes).
 
-## Agent entry (machine instructions)
-
-Use these docs exactly (no improvisation):
-
-- `docs/linux-seed.md` — host bootstrap + update flow (clone **only** portable)
-- `docs/bootstrap.md` — per‑repo bootstrap details
-
 ## What this is (and is not)
 
 - This is a portable baseline.
@@ -49,8 +42,8 @@ Use these docs exactly (no improvisation):
 
 Tracking clone + live copy (no SRD rsync):
 
-- Tracking clone: `/srv/dev/ops-standards-portable`
-- Live copy: `/opt/ops-standards`
+- Tracking clone: `${TRACKING_ROOT}` (defaults in `docs/linux-seed.md`)
+- Live copy: `${LIVE_ROOT}` (defaults in `docs/linux-seed.md`)
 - Updates flow via **SRD block sync** only (no rsync into local `srd/`).
  - Optional one-time template copy: sync `templates/` into `/opt/ops-standards/templates/` if you want live templates updated by block sync.
 

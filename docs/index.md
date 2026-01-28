@@ -28,16 +28,12 @@ CGP-specific standards live in the private ops-standards repo.
 - `docs/codex.md`
 - `docs/linux-seed.md`
 
-## Agent entry (machine instructions)
-
-- `docs/linux-seed.md` (host bootstrap + update flow; clone **only** portable)
-
 ## Update model (portable installs)
 
 Portable installs use a tracking clone plus a live copy:
 
-- Tracking clone: `/srv/dev/ops-standards-portable` (pull updates here)
-- Live copy: `/opt/ops-standards` (used by the host)
+- Tracking clone: `${TRACKING_ROOT}` (defaults in `docs/linux-seed.md`)
+- Live copy: `${LIVE_ROOT}` (defaults in `docs/linux-seed.md`)
 
 **Do not rsync portable `srd/` into local `srd/`.**
 Portable updates flow through **SRD block sync** only.

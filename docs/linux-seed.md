@@ -12,6 +12,13 @@ Do not improvise. Follow the steps exactly.
 
 Seed a Linux host with the same baseline layout used on CGP, without installing CGP-specific packages.
 
+## Path defaults (override only if required)
+
+```bash
+TRACKING_ROOT="/srv/dev/ops-standards-portable"
+LIVE_ROOT="/opt/ops-standards"
+```
+
 ## WSL hostname (optional)
 
 ```bash
@@ -27,24 +34,24 @@ If you set a hostname, add it to `/etc/hosts` and restart WSL.
 Step 1 — tracking clone (portable baseline):
 
 ```bash
-sudo mkdir -p /srv/dev/ops-standards-portable
-sudo chown "$USER":"$USER" /srv/dev/ops-standards-portable
+sudo mkdir -p "${TRACKING_ROOT}"
+sudo chown "$USER":"$USER" "${TRACKING_ROOT}"
 
-git clone git@github.com:erm-git/ops-standards-portable.git /srv/dev/ops-standards-portable
+git clone git@github.com:erm-git/ops-standards-portable.git "${TRACKING_ROOT}"
 ```
 
 Step 2 — live copy (host-used path):
 
 ```bash
-sudo mkdir -p /opt/ops-standards
-sudo chown "$USER":"$USER" /opt/ops-standards
+sudo mkdir -p "${LIVE_ROOT}"
+sudo chown "$USER":"$USER" "${LIVE_ROOT}"
 ```
 
 Step 3 — bootstrap live copy (required)
 
 ```bash
-/srv/dev/ops-standards-portable/scripts/bootstrap.sh \
-  --target /opt/ops-standards \
+"${TRACKING_ROOT}/scripts/bootstrap.sh" \
+  --target "${LIVE_ROOT}" \
   --title "Ops Standards (Local)" \
   --one-line "Local standards and references for this host" \
   --purpose "Local standards repo seeded from portable baseline, with host-specific additions."
@@ -55,23 +62,23 @@ Step 4 — one-time template copy (recommended)
 If you want templates in the live copy (so SRD block updates apply there too):
 
 ```bash
-mkdir -p /opt/ops-standards/templates
-rsync -a /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates/
-ls -la /opt/ops-standards/templates
+mkdir -p "${LIVE_ROOT}/templates"
+rsync -a "${TRACKING_ROOT}/templates/" "${LIVE_ROOT}/templates/"
+ls -la "${LIVE_ROOT}/templates"
 ```
 
 If you skip this, template block sync will skip templates (no targets).
 
 Step 5 — optional: install sync script in live copy
 
-If you want a stable path under `/opt/ops-standards/scripts/`:
+If you want a stable path under `${LIVE_ROOT}/scripts/`:
 
 ```bash
-mkdir -p /opt/ops-standards/scripts
-cp /srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh /opt/ops-standards/scripts/
+mkdir -p "${LIVE_ROOT}/scripts"
+cp "${TRACKING_ROOT}/scripts/sync-from-upstream.sh" "${LIVE_ROOT}/scripts/"
 
 # Use tracking clone as source when running from live copy
-/opt/ops-standards/scripts/sync-from-upstream.sh --live /opt/ops-standards --tracking /srv/dev/ops-standards-portable
+"${LIVE_ROOT}/scripts/sync-from-upstream.sh" --live "${LIVE_ROOT}" --tracking "${TRACKING_ROOT}"
 ```
 
 ### Hard rule (no rsync into local SRD)
@@ -85,7 +92,7 @@ Portable updates flow through **SRD block sync** only.
 Keep host‑specific SRD additions here:
 
 ```
-/opt/ops-standards/srd/docs/<host>/...
+${LIVE_ROOT}/srd/docs/<host>/...
 ```
 
 This folder is never overwritten by portable updates.
@@ -94,8 +101,8 @@ Step 6 — host-local SRD stub (optional)
 
 ```bash
 HOST_SLUG="my-host"
-mkdir -p "/opt/ops-standards/srd/docs/${HOST_SLUG}"
-cat > "/opt/ops-standards/srd/docs/${HOST_SLUG}/README.md" <<'EOF'
+mkdir -p "${LIVE_ROOT}/srd/docs/${HOST_SLUG}"
+cat > "${LIVE_ROOT}/srd/docs/${HOST_SLUG}/README.md" <<'EOF'
 # Host SRD (local)
 
 This folder contains host-specific SRD additions.
@@ -122,15 +129,15 @@ Rules:
 ## Update flow (manual review before apply)
 
 ```bash
-cd /srv/dev/ops-standards-portable
+cd "${TRACKING_ROOT}"
 
 git pull --ff-only
 
 # Optional: review updates in the portable baseline
 # (block sync will only update SRD blocks in local core docs/templates)
 
-/srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards
-/srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards --apply
+"${TRACKING_ROOT}/scripts/sync-from-upstream.sh" --live "${LIVE_ROOT}"
+"${TRACKING_ROOT}/scripts/sync-from-upstream.sh" --live "${LIVE_ROOT}" --apply
 ```
 
 The sync script:
@@ -141,18 +148,18 @@ The sync script:
 
 ## Existing host update (short form)
 
-Use this on hosts that already have `/opt/ops-standards`:
+Use this on hosts that already have `${LIVE_ROOT}`:
 
 ```bash
-cd /srv/dev/ops-standards-portable
+cd "${TRACKING_ROOT}"
 git pull --ff-only
 
 # One-time template copy if missing
-mkdir -p /opt/ops-standards/templates
-rsync -a /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates/
+mkdir -p "${LIVE_ROOT}/templates"
+rsync -a "${TRACKING_ROOT}/templates/" "${LIVE_ROOT}/templates/"
 
-/srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards
-/srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards --apply
+"${TRACKING_ROOT}/scripts/sync-from-upstream.sh" --live "${LIVE_ROOT}"
+"${TRACKING_ROOT}/scripts/sync-from-upstream.sh" --live "${LIVE_ROOT}" --apply
 ```
 
 ## Core docs SRD‑block targets

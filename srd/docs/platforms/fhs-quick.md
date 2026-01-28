@@ -1,5 +1,5 @@
 ---
-title: "FHS Quick Reference (CGP)"
+title: "FHS Quick Reference"
 status: "standard"
 ---
 
@@ -30,8 +30,14 @@ sudo chown -R <user>:<group> /opt/<project>
 
 ## Standard install pattern
 
+Set the ops-standards root (default shown):
+
+```bash
+OPS_ROOT="/opt/ops-standards"
+```
+
 Keep scripts in their repo, then install a **thin launcher** into `/usr/local/bin`:
 
 ```bash
-sudo ln -sf /opt/ops-standards/scripts/sync-agents-srd.sh /usr/local/bin/sync-agents-srd
+sudo ln -sf "${OPS_ROOT}/scripts/sync-agents-srd.sh" /usr/local/bin/sync-agents-srd
 ```
