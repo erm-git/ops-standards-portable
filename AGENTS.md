@@ -19,7 +19,7 @@ Follow the steps exactly. Do not improvise.
 ## Required procedure (new or existing host)
 
 Precondition: `/opt/ops-standards` already exists and was bootstrapped by a human.
-If not, stop and ask the human to run `docs/linux-seed.md` first.
+If not, stop and ask the human to follow the steps in `docs/linux-seed.md` first.
 
 1) Clone portable baseline (tracking clone):
 
