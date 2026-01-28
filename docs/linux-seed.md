@@ -20,10 +20,10 @@ If you set a hostname, add it to `/etc/hosts` and restart WSL.
 Tracking clone (portable baseline):
 
 ```bash
-sudo mkdir -p /opt/ops-standards-portable
-sudo chown "$USER":"$USER" /opt/ops-standards-portable
+sudo mkdir -p /srv/dev/ops-standards-portable
+sudo chown "$USER":"$USER" /srv/dev/ops-standards-portable
 
-git clone git@github.com:erm-git/ops-standards-portable.git /opt/ops-standards-portable
+git clone git@github.com:erm-git/ops-standards-portable.git /srv/dev/ops-standards-portable
 ```
 
 Live copy (host-used path):
@@ -31,6 +31,15 @@ Live copy (host-used path):
 ```bash
 sudo mkdir -p /opt/ops-standards
 sudo chown "$USER":"$USER" /opt/ops-standards
+```
+
+### One-time template copy (recommended)
+
+If you want templates in the live copy (so SRD block updates apply there too):
+
+```bash
+mkdir -p /opt/ops-standards/templates
+rsync -a /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates/
 ```
 
 ### Important rule (no rsync into local SRD)
@@ -69,15 +78,15 @@ Rules:
 ## Update flow (manual review before apply)
 
 ```bash
-cd /opt/ops-standards-portable
+cd /srv/dev/ops-standards-portable
 
 git pull --ff-only
 
 # Optional: review updates in the portable baseline
 # (block sync will only update SRD blocks in local core docs/templates)
 
-/opt/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards
-/opt/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards --apply
+/srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards
+/srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards --apply
 ```
 
 The sync script:

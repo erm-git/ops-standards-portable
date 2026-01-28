@@ -42,9 +42,10 @@ single-user boxes).
 
 Tracking clone + live copy (no SRD rsync):
 
-- Tracking clone: `/opt/ops-standards-portable`
+- Tracking clone: `/srv/dev/ops-standards-portable`
 - Live copy: `/opt/ops-standards`
 - Updates flow via **SRD block sync** only (no rsync into local `srd/`).
+ - Optional one-time template copy: sync `templates/` into `/opt/ops-standards/templates/` if you want live templates updated by block sync.
 
 ## Docs and references
 

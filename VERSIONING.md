@@ -36,6 +36,6 @@ Do **not** cut a portable release for CGP-only changes that live in ops-standard
 `/opt/ops-standards` is the control-plane repo that orchestrates:
 
 - `srd/docs/` (CGP SRD)
-- `/opt/ops-standards-portable` (portable bundle)
+- `/srv/dev/ops-standards-portable` (portable bundle)
 
 Portable releases are cut from this repo when new standards must propagate to other hosts.
