@@ -18,6 +18,9 @@ Follow the steps exactly. Do not improvise.
 
 ## Required procedure (new or existing host)
 
+Precondition: `/opt/ops-standards` already exists and was bootstrapped by a human.
+If not, stop and ask the human to run `docs/linux-seed.md` first.
+
 1) Clone portable baseline (tracking clone):
 
 ```bash
@@ -33,24 +36,14 @@ sudo mkdir -p /opt/ops-standards
 sudo chown "$USER":"$USER" /opt/ops-standards
 ```
 
-3) Bootstrap live copy (required):
-
-```bash
-/srv/dev/ops-standards-portable/scripts/bootstrap.sh \
-  --target /opt/ops-standards \
-  --title "Ops Standards (Local)" \
-  --one-line "Local standards and references for this host" \
-  --purpose "Local standards repo seeded from portable baseline, with host-specific additions."
-```
-
-4) Optional template copy (recommended):
+3) Optional template copy (recommended):
 
 ```bash
 mkdir -p /opt/ops-standards/templates
 rsync -a /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates/
 ```
 
-5) Run SRD block sync (portable → live):
+4) Run SRD block sync (portable → live):
 
 ```bash
 /srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards
