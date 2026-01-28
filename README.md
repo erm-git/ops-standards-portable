@@ -45,7 +45,7 @@ Tracking clone + live copy (no SRD rsync):
 - Tracking clone: `${TRACKING_ROOT}` (defaults in `docs/linux-seed.md`)
 - Live copy: `${LIVE_ROOT}` (defaults in `docs/linux-seed.md`)
 - Updates flow via **SRD block sync** only (no rsync into local `srd/`).
- - Optional one-time template copy: sync `templates/` into `/opt/ops-standards/templates/` if you want live templates updated by block sync.
+- Required template copy: sync `templates/` into `/opt/ops-standards/templates/` so template SRD blocks can update.
 
 ## Docs and references
 

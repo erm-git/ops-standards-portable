@@ -43,7 +43,7 @@ sudo mkdir -p "${LIVE_ROOT}"
 sudo chown "$USER":"$USER" "${LIVE_ROOT}"
 ```
 
-3) Optional template copy (recommended):
+3) Template copy (required):
 
 ```bash
 mkdir -p "${LIVE_ROOT}/templates"

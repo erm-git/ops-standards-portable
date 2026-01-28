@@ -59,7 +59,7 @@ Step 3 — bootstrap live copy (required)
 
 Step 4 — one-time template copy (recommended)
 
-If you want templates in the live copy (so SRD block updates apply there too):
+Templates must exist in the live copy (so SRD block updates apply there too):
 
 ```bash
 mkdir -p "${LIVE_ROOT}/templates"
@@ -155,7 +155,7 @@ Use this on hosts that already have `${LIVE_ROOT}`:
 cd "${TRACKING_ROOT}"
 git pull --ff-only
 
-# One-time template copy if missing
+# Template copy (required)
 mkdir -p "${LIVE_ROOT}/templates"
 rsync -a "${TRACKING_ROOT}/templates/" "${LIVE_ROOT}/templates/"
 
