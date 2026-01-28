@@ -37,6 +37,7 @@ Portable installs use a tracking clone plus a live copy:
 
 **Do not rsync portable `srd/` into local `srd/`.**
 Portable updates flow through **SRD block sync** only.
+For existing hosts, follow the update flow in `docs/linux-seed.md`.
 
 ## Offline standards copy
 
