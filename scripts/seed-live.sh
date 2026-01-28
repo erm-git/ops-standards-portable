@@ -3,6 +3,7 @@ set -euo pipefail
 
 APPLY=0
 PULL=1
+STATUS=0
 LIVE_ROOT="/opt/ops-standards"
 TRACKING_ROOT=""
 TITLE="Ops Standards (Local)"
@@ -17,10 +18,12 @@ Usage:
   scripts/seed-live.sh --apply
   scripts/seed-live.sh --apply --no-pull
   scripts/seed-live.sh --live /opt/ops-standards --tracking /srv/dev/ops-standards-portable --apply
+  scripts/seed-live.sh --status
 
 Options:
   --apply           Perform writes (required)
   --no-pull         Skip git pull in tracking clone before seeding
+  --status          Read-only status (no writes, no pull)
   --live <path>     Live root (default: /opt/ops-standards)
   --tracking <path> Tracking clone root (default: this repo root)
   --title <text>    README title (default: Ops Standards (Local))
@@ -34,6 +37,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --apply) APPLY=1; shift ;;
     --no-pull) PULL=0; shift ;;
+    --status) STATUS=1; shift ;;
     --live) LIVE_ROOT="${2:-}"; shift 2 ;;
     --tracking) TRACKING_ROOT="${2:-}"; shift 2 ;;
     --title) TITLE="${2:-}"; shift 2 ;;
@@ -47,11 +51,6 @@ done
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 TRACKING_ROOT="${TRACKING_ROOT:-$ROOT}"
 
-if [[ "${APPLY}" != "1" ]]; then
-  echo "ERROR: --apply is required for seeding." >&2
-  exit 2
-fi
-
 if [[ ! -d "${TRACKING_ROOT}/.git" ]]; then
   echo "ERROR: tracking clone not found: ${TRACKING_ROOT}" >&2
   exit 2
@@ -59,6 +58,40 @@ fi
 
 if [[ ! -d "${TRACKING_ROOT}/templates" || ! -f "${TRACKING_ROOT}/VERSION" ]]; then
   echo "ERROR: tracking clone missing required paths: ${TRACKING_ROOT}" >&2
+  exit 2
+fi
+
+tracking_version="(missing)"
+if [[ -f "${TRACKING_ROOT}/VERSION" ]]; then
+  tracking_version="$(cat "${TRACKING_ROOT}/VERSION")"
+fi
+
+if [[ "${STATUS}" == "1" ]]; then
+  live_version="(missing)"
+  srd_block_version="(missing)"
+  if [[ -f "${LIVE_ROOT}/VERSION" ]]; then
+    live_version="$(cat "${LIVE_ROOT}/VERSION")"
+  fi
+  if [[ -f "${LIVE_ROOT}/AGENTS.md" ]]; then
+    srd_block_version="$(sed -n 's/^-[[:space:]]*SRD block version:[[:space:]]*`\(.*\)`$/\1/p' "${LIVE_ROOT}/AGENTS.md" | head -n 1)"
+    if [[ -z "${srd_block_version}" ]]; then
+      srd_block_version="(missing)"
+    fi
+  fi
+  echo "Tracking root: ${TRACKING_ROOT}"
+  echo "Tracking VERSION: ${tracking_version}"
+  echo "Live root: ${LIVE_ROOT}"
+  if [[ -d "${LIVE_ROOT}" ]]; then
+    echo "Live VERSION: ${live_version}"
+    echo "SRD block version (live AGENTS.md): ${srd_block_version}"
+  else
+    echo "Live root missing: ${LIVE_ROOT}"
+  fi
+  exit 0
+fi
+
+if [[ "${APPLY}" != "1" ]]; then
+  echo "ERROR: --apply is required for seeding." >&2
   exit 2
 fi
 

@@ -22,6 +22,8 @@ LIVE_ROOT="/opt/ops-standards"
 ## Required procedure (all hosts)
 
 **Rule:** clone **only** `ops-standards-portable`. Do not clone `ops-standards` separately.
+**Rule:** always pull the tracking clone before following instructions.  
+If VERSION changes after pull, re-open this file and restart from Step 1.
 
 Step 1 — ensure tracking clone exists and is current:
 
@@ -58,6 +60,21 @@ Step 4 — verify:
 
 ```bash
 cat "${LIVE_ROOT}/VERSION"
+```
+
+Step 5 — optional (manual, last step only): local git repo
+
+This is **not required** and **must not be automated**.  
+Only run if the system is nominal, files are correct, and the human explicitly requests it.
+
+```bash
+# local-only bare repo (no GitHub remote by default)
+sudo mkdir -p /srv/git
+sudo chown "$USER":"$USER" /srv/git
+git init --bare /srv/git/ops-standards.git
+git -C "${LIVE_ROOT}" init
+git -C "${LIVE_ROOT}" remote add local "/srv/git/ops-standards.git" 2>/dev/null || true
+git -C "${LIVE_ROOT}" push --mirror local
 ```
 
 ## Hard rules

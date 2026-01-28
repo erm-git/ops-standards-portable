@@ -27,6 +27,9 @@ LIVE_ROOT="/opt/ops-standards"
 
 Run these steps exactly. No other flow is supported.
 
+Rule: always pull the tracking clone before following instructions.  
+If VERSION changes after pull, re-open this file and restart from Step 1.
+
 1) Ensure tracking clone exists and is current:
 
 ```bash
@@ -58,6 +61,21 @@ Notes:
 - `seed-live.sh` pulls the tracking clone by default; use `--no-pull` only if you are offline.
 - `seed-live.sh` does **not** run sudo; `${LIVE_ROOT}` must already exist and be writable.
 - Do not run `sync-from-upstream.sh` separately; it is already called by `seed-live.sh`.
+
+4) Optional (manual, last step only) — local git repo on target host:
+
+This is **not required** and **must not be automated**.  
+Only run if the system is nominal, files are correct, and the human explicitly requests it.
+
+```bash
+# local-only bare repo (no GitHub remote by default)
+sudo mkdir -p /srv/git
+sudo chown "$USER":"$USER" /srv/git
+git init --bare /srv/git/ops-standards.git
+git -C "${LIVE_ROOT}" init
+git -C "${LIVE_ROOT}" remote add local "/srv/git/ops-standards.git" 2>/dev/null || true
+git -C "${LIVE_ROOT}" push --mirror local
+```
 
 ## Codex session workflow (target host)
 
