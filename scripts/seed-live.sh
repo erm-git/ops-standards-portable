@@ -2,7 +2,7 @@
 set -euo pipefail
 
 APPLY=0
-PULL=0
+PULL=1
 LIVE_ROOT="/opt/ops-standards"
 TRACKING_ROOT=""
 TITLE="Ops Standards (Local)"
@@ -15,12 +15,12 @@ Seed a live ops-standards copy from the portable tracking clone.
 
 Usage:
   scripts/seed-live.sh --apply
-  scripts/seed-live.sh --apply --pull
+  scripts/seed-live.sh --apply --no-pull
   scripts/seed-live.sh --live /opt/ops-standards --tracking /srv/dev/ops-standards-portable --apply
 
 Options:
   --apply           Perform writes (required)
-  --pull            git pull --ff-only in tracking clone before seeding
+  --no-pull         Skip git pull in tracking clone before seeding
   --live <path>     Live root (default: /opt/ops-standards)
   --tracking <path> Tracking clone root (default: this repo root)
   --title <text>    README title (default: Ops Standards (Local))
@@ -33,7 +33,7 @@ USAGE
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --apply) APPLY=1; shift ;;
-    --pull) PULL=1; shift ;;
+    --no-pull) PULL=0; shift ;;
     --live) LIVE_ROOT="${2:-}"; shift 2 ;;
     --tracking) TRACKING_ROOT="${2:-}"; shift 2 ;;
     --title) TITLE="${2:-}"; shift 2 ;;
