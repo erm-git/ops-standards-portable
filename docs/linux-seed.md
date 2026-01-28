@@ -122,6 +122,22 @@ The sync script:
 - logs missing markers instead of overwriting
 - updates `VERSION`
 
+## Existing host update (short form)
+
+Use this on hosts that already have `/opt/ops-standards`:
+
+```bash
+cd /srv/dev/ops-standards-portable
+git pull --ff-only
+
+# One-time template copy if missing
+mkdir -p /opt/ops-standards/templates
+rsync -a /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates/
+
+/srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards
+/srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh --live /opt/ops-standards --apply
+```
+
 ## Core docs SRD‑block targets
 
 These files should contain SRD block markers on the host:
