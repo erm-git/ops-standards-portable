@@ -40,6 +40,7 @@ If you want templates in the live copy (so SRD block updates apply there too):
 ```bash
 mkdir -p /opt/ops-standards/templates
 rsync -a /srv/dev/ops-standards-portable/templates/ /opt/ops-standards/templates/
+ls -la /opt/ops-standards/templates
 ```
 
 ### Important rule (no rsync into local SRD)
