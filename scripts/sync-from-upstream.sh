@@ -64,8 +64,20 @@ if [[ -n "${REPORT}" ]]; then
   : > "${REPORT}"
 fi
 
+tracking_version="$(cat "${TRACKING_ROOT}/VERSION")"
+live_version=""
+if [[ -f "${LIVE_ROOT}/VERSION" ]]; then
+  live_version="$(cat "${LIVE_ROOT}/VERSION")"
+fi
+
 echo "Tracking root: ${TRACKING_ROOT}"
 echo "Live root: ${LIVE_ROOT}"
+echo "Tracking VERSION: ${tracking_version}"
+if [[ -n "${live_version}" ]]; then
+  echo "Live VERSION: ${live_version}"
+else
+  echo "Live VERSION: (missing)"
+fi
 echo "Mode: $([[ "${APPLY}" == "1" ]] && echo apply || echo dry-run)"
 
 declare -a MAPS=(
@@ -89,14 +101,16 @@ python_block_sync() {
   local src="$1"
   local dst="$2"
   local apply="$3"
-  python3 - "$src" "$dst" "$apply" <<'PY'
+  PORTABLE_VERSION="${tracking_version}" python3 - "$src" "$dst" "$apply" <<'PY'
 import io
 import sys
 from pathlib import Path
+import os
 
 SRC = Path(sys.argv[1])
 DST = Path(sys.argv[2])
 APPLY = sys.argv[3] == "1"
+VERSION = os.environ.get("PORTABLE_VERSION", "")
 
 BEGIN = "<!-- SRD:BEGIN -->"
 END = "<!-- SRD:END -->"
@@ -133,6 +147,8 @@ if not dst_span:
     sys.exit(0)
 
 src_block = src_text[src_span[0]:src_span[1]]
+if VERSION:
+    src_block = src_block.replace("{{PORTABLE_VERSION}}", VERSION)
 dst_block = dst_text[dst_span[0]:dst_span[1]]
 
 if src_block == dst_block:
@@ -177,11 +193,16 @@ done
 
 if [[ "${APPLY}" == "1" ]]; then
   run_cmd cp "${TRACKING_ROOT}/VERSION" "${LIVE_ROOT}/VERSION"
-else
-  if cmp -s "${TRACKING_ROOT}/VERSION" "${LIVE_ROOT}/VERSION"; then
-    run_cmd echo "VERSION: no change"
+  if [[ "${tracking_version}" == "${live_version}" ]]; then
+    run_cmd echo "VERSION: no change (${tracking_version})"
   else
-    run_cmd echo "VERSION: would update ${LIVE_ROOT}/VERSION"
+    run_cmd echo "VERSION: updated ${live_version:-missing} -> ${tracking_version}"
+  fi
+else
+  if [[ "${tracking_version}" == "${live_version}" ]]; then
+    run_cmd echo "VERSION: no change (${tracking_version})"
+  else
+    run_cmd echo "VERSION: would update ${live_version:-missing} -> ${tracking_version}"
   fi
 fi
 

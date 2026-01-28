@@ -9,6 +9,7 @@ status: "standard"
 This block is synced from `srd/docs/policies/agents-block.md`. Do not edit here.
 
 - Canonical standards: `srd/docs/`
+- SRD block version: `{{PORTABLE_VERSION}}`
 - MCP policy: `srd/docs/policies/mcp-standards.md`
 - MCP query playbook: `srd/docs/tools/mcp-query-playbook.md`
 - Firecrawl is paid — do not use unless explicitly requested.
