@@ -57,7 +57,7 @@ Step 3 — bootstrap live copy (required)
   --purpose "Local standards repo seeded from portable baseline, with host-specific additions."
 ```
 
-Step 4 — one-time template copy (recommended)
+Step 4 — template copy (required)
 
 Templates must exist in the live copy (so SRD block updates apply there too):
 
@@ -67,7 +67,7 @@ rsync -a "${TRACKING_ROOT}/templates/" "${LIVE_ROOT}/templates/"
 ls -la "${LIVE_ROOT}/templates"
 ```
 
-If you skip this, template block sync will skip templates (no targets).
+Do not skip this. Template SRD blocks require these files to exist.
 
 Step 5 — optional: install sync script in live copy
 
