@@ -19,6 +19,13 @@ Note: if you create host-level directories with `sudo` (for example under
 user/service account (commonly `sudo chown -R "$USER:$USER" <path>` on
 single-user boxes).
 
+## Agent entry (machine instructions)
+
+Use these docs exactly (no improvisation):
+
+- `docs/linux-seed.md` — host bootstrap + update flow (clone **only** portable)
+- `docs/bootstrap.md` — per‑repo bootstrap details
+
 ## What this is (and is not)
 
 - This is a portable baseline.

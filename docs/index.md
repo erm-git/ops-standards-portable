@@ -28,6 +28,10 @@ CGP-specific standards live in the private ops-standards repo.
 - `docs/codex.md`
 - `docs/linux-seed.md`
 
+## Agent entry (machine instructions)
+
+- `docs/linux-seed.md` (host bootstrap + update flow; clone **only** portable)
+
 ## Update model (portable installs)
 
 Portable installs use a tracking clone plus a live copy:

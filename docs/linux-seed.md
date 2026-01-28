@@ -3,9 +3,14 @@ title: "Linux Seed (Portable)"
 status: "standard"
 ---
 
+## Agent entry (machine instructions)
+
+This file is the canonical, unambiguous procedure for seeding a Linux host.
+Do not improvise. Follow the steps exactly.
+
 ## Goal
 
-Seed a Linux host (including WSL) with the same baseline layout used on CGP, without installing CGP-specific packages.
+Seed a Linux host with the same baseline layout used on CGP, without installing CGP-specific packages.
 
 ## WSL hostname (optional)
 
@@ -17,7 +22,9 @@ If you set a hostname, add it to `/etc/hosts` and restart WSL.
 
 ## Tracking clone + live copy (portable standard)
 
-Tracking clone (portable baseline):
+**Rule:** clone **only** `ops-standards-portable`. Do not clone `ops-standards` separately.
+
+Step 1 — tracking clone (portable baseline):
 
 ```bash
 sudo mkdir -p /srv/dev/ops-standards-portable
@@ -26,14 +33,24 @@ sudo chown "$USER":"$USER" /srv/dev/ops-standards-portable
 git clone git@github.com:erm-git/ops-standards-portable.git /srv/dev/ops-standards-portable
 ```
 
-Live copy (host-used path):
+Step 2 — live copy (host-used path):
 
 ```bash
 sudo mkdir -p /opt/ops-standards
 sudo chown "$USER":"$USER" /opt/ops-standards
 ```
 
-### One-time template copy (recommended)
+Step 3 — bootstrap live copy (required)
+
+```bash
+/srv/dev/ops-standards-portable/scripts/bootstrap.sh \
+  --target /opt/ops-standards \
+  --title "Ops Standards (Local)" \
+  --one-line "Local standards and references for this host" \
+  --purpose "Local standards repo seeded from portable baseline, with host-specific additions."
+```
+
+Step 4 — one-time template copy (recommended)
 
 If you want templates in the live copy (so SRD block updates apply there too):
 
@@ -45,7 +62,7 @@ ls -la /opt/ops-standards/templates
 
 If you skip this, template block sync will skip templates (no targets).
 
-### Optional: install sync script in live copy
+Step 5 — optional: install sync script in live copy
 
 If you want a stable path under `/opt/ops-standards/scripts/`:
 
@@ -57,7 +74,7 @@ cp /srv/dev/ops-standards-portable/scripts/sync-from-upstream.sh /opt/ops-standa
 /opt/ops-standards/scripts/sync-from-upstream.sh --live /opt/ops-standards --tracking /srv/dev/ops-standards-portable
 ```
 
-### Important rule (no rsync into local SRD)
+### Hard rule (no rsync into local SRD)
 
 Do **not** `rsync --delete` portable `srd/` into local `srd/`. That overwrites host‑local SRD additions.
 
@@ -73,7 +90,7 @@ Keep host‑specific SRD additions here:
 
 This folder is never overwritten by portable updates.
 
-### Host-local SRD stub (optional)
+Step 6 — host-local SRD stub (optional)
 
 ```bash
 HOST_SLUG="my-host"
