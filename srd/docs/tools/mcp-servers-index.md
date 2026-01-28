@@ -1,93 +1,82 @@
 ---
-title: "MCP Servers Index (CGP SRD)"
+title: "MCP Servers Index (Portable)"
 status: "living"
 ---
 
-# MCP Servers Index (local + official)
+# MCP Servers Index (Portable)
 
-This file is a quick index of the host **MCP stack** (the set of MCP servers configured and available on this machine): what they are, where they live, and how they’re configured.
+Purpose: list the portable baseline MCP servers and the optional/public servers that can be added on any host.
 
-## Where MCP is configured
+## Source of truth
 
-- Codex CLI: `~/.codex/config.toml`
-- VS Code Remote (server-side): `~/.vscode-server/data/User/mcp.json`
-- VS Code local: `~/.config/Code/User/mcp.json` (currently empty on this machine)
+- Codex CLI registry: `~/.codex/config.toml` (authoritative)
 
-## Portable Defaults vs Optional
+## Naming conventions (local MCP)
 
-- Defaults: ops-standards-srd, searxng, text-etl (CPU), github-search-local
-- Optional: reddit-mcp, czkawka, text-etl-gpu, firecrawl
+- Use lowercase + hyphens.
+- Use `-local` suffix when a public server exists for the same domain (example: `github-search-local`).
+- Keep public MCP names as published by the provider.
 
-## Auth env wiring (why shells load “secrets”)
+## Portable defaults (local, stdio)
 
-Some HTTP MCP servers expect auth in environment variables:
+These are the default local servers for portable systems. Paths assume `/opt/<project>` layout.
 
-- GitHub official MCP expects `GITHUB_MCP_AUTHORIZATION` (typically `Bearer <token>`)
-- Hugging Face official MCP expects either `HF_TOKEN` or `HF_MCP_AUTHORIZATION` depending on client config
+- **ops-standards-srd**
+  - Entry point: `/opt/ops-standards/scripts/ops_standards_srd_mcp_server.py`
+  - Env: `OPS_SRD_ROOTS` (at minimum `srd=/opt/ops-standards/srd/docs`)
 
-On this machine those variables are populated by `~/.config/secrets/load.sh` (sourced by `~/.profile`).
+- **searxng**
+  - Entry point: `/opt/searxng/searxng_mcp_server.py`
 
-## Local servers (stdio, run as a local process)
+- **text-etl** (CPU)
+  - Entry point: `/opt/text-etl/text_etl_core_mcp_server.py`
+  - Includes `playwright_fetch` tool (no standalone Playwright MCP required by default)
 
-These are installed under `/opt/<project>` and are started by your MCP client using a `command` + `args` config.
+- **github-search-local**
+  - Entry point: `/opt/github-search/mcp_server.py`
+  - Env: `GITHUB_TOKEN` (or use `gh auth token` in the wrapper)
 
-### GitHub (local)
+- **web.run** (remote tool)
+  - Not a local MCP server. It is a remote tool available via the OpenAI client.
 
-- **Codex name:** `github_search_local`
-- **VS Code Remote name:** `github_search_local`
-- **Entry point:** `/opt/github-search/mcp_server.py`
-- **What it does:** lightweight GitHub discovery/search helpers (wrapping local scripts like `gh-api-search` / `gh-etl-scout`)
-- **Notes:** uses `GITHUB_TOKEN` (directly or via `gh auth token`) for API access; does not attempt to mirror the full GitHub platform toolset.
+## Optional local servers (portable)
 
-### Hugging Face (local)
+- **text-etl-gpu** (GPU only)
+  - Entry point: `/opt/text-etl/text_etl_gpu_mcp_server.py`
 
-- **Codex name:** `huggingface_local`
-- **VS Code Remote name:** `huggingface_local`
-- **Entry point:** `/opt/llm-stack/hf-tools/huggingface_mcp_server.py`
-- **What it does:** Hugging Face Hub search + metadata + controlled local downloads (e.g. download a file/snapshot into allowed write roots)
-- **Key env:** `HF_TOKEN` (optional), `HF_HOME`, `HF_HUB_CACHE`, `HF_DOWNLOAD_ROOT`, `HF_MCP_WRITE_ROOTS`
+- **reddit-mcp**
+  - Entry point: `/opt/reddit-mcp/mcp_server.py`
 
-### Other local MCP servers shipped under /opt/<project>
+- **czkawka**
+  - Entry point: `/opt/czkawka/mcp_server.py`
 
-These are also used by Codex on this machine (see `~/.codex/config.toml` for exact names/env):
+- **playwright (standalone)**
+  - Optional only. If installed, tool names must mirror the Microsoft Playwright MCP tool set.
 
-- `/opt/searxng/searxng_mcp_server.py` — local SearxNG web search
-- `/opt/catacomb-core-planner/searxng_mcp_server.py` — SearxNG web search (planner-flavored wrapper)
-- `/opt/catacomb-core-planner/text_etl_core_mcp_server.py` — text-etl CPU workflows (planner-flavored wrapper)
-- `/opt/catacomb-core-planner/text_etl_gpu_mcp_server.py` — text-etl GPU workflows (planner-flavored wrapper)
-- `/opt/repo-docs/mcp_server.py` — local indexed docs search/read for `/srv/dev/repo-docs`
-- `/opt/rpg-srd/mcp_server.py` — local indexed SRD search/read for `/srv/dev/rpg-srd`
-- `/opt/rpg-srd/rpg_srd_text_etl_mcp_server.py` — rpg-srd ETL workflows
-- `/opt/text-etl/text_etl_core_mcp_server.py` — text-etl CPU workflows
-- `/opt/text-etl/text_etl_gpu_mcp_server.py` — text-etl GPU workflows
-- `/opt/reddit-mcp/mcp_server.py` — reddit ingestion (PRAW via text-etl CLI)
-- `/opt/catacomb-core/mcp_server.py` — catacomb-core helpers (docs/YAML access + harness/test wrappers)
-- `/opt/czkawka/mcp_server.py` — safe duplicate-finder wrappers (policy/allowlist guarded)
-- `/opt/firecrawl/mcp_server.py` and `/opt/firecrawl/credit_mcp_server.py` — Firecrawl integration (paid; avoid unless explicitly requested)
+- **firecrawl** (paid)
+  - Optional only. Require explicit user confirmation before use.
 
-## Official/public servers (HTTP, hosted)
+## Non-default local servers (only if installed)
 
-These are “remote MCP servers” configured by URL and used via OAuth or tokens.
+These are not part of the portable baseline. Add only on hosts that install them.
 
-### GitHub official MCP
+- **repo-docs** → `/opt/repo-docs/mcp_server.py`
+- **rpg-srd** → `/opt/rpg-srd/mcp_server.py`
+- **vscode-etl** → `/opt/vscode-etl/scripts/mcp/vscode_chatlogs_mcp.py`
+- **huggingface-local** → `/opt/huggingface-local/huggingface_mcp_server.py`
 
-- **Codex name:** `github-mcp-server`
-- **VS Code Remote name:** `io.github.github/github-mcp-server`
-- **URL:** `https://api.githubcopilot.com/mcp/`
-- **Auth env (typical):** `GITHUB_MCP_AUTHORIZATION`
-- **What it does:** broad GitHub platform toolset (repos/files, issues/PRs, Actions, etc.); supports OAuth flows in hosts that implement it.
+## Public/official servers (HTTP)
 
-### Hugging Face official MCP
+- **GitHub MCP**
+  - Codex name: `github-mcp-server`
+  - URL: `https://api.githubcopilot.com/mcp/`
+  - Auth: `GITHUB_MCP_AUTHORIZATION` (Bearer token)
 
-- **Codex name:** `hf-mcp-server`
-- **VS Code Remote name:** `huggingface/hf-mcp-server`
-- **URL:** `https://huggingface.co/mcp?login`
-- **Auth env (depends on config):** `HF_TOKEN` or `HF_MCP_AUTHORIZATION`
-- **What it does:** Hub exploration + integrates community MCP tools via Spaces (great for “find and use a tool hosted on HF”).
+- **Hugging Face MCP**
+  - Codex name: `hf-mcp-server`
+  - URL: `https://huggingface.co/mcp?login`
+  - Auth: `HF_TOKEN` or `HF_MCP_AUTHORIZATION` (depends on client)
 
-### OpenAI Developer Docs MCP
-
-- **Codex name:** `openaiDeveloperDocs`
-- **VS Code Remote name:** `openaiDeveloperDocs`
-- **URL:** `https://developers.openai.com/mcp`
-- **What it does:** search/read OpenAI developer documentation via MCP.
+- **OpenAI Developer Docs MCP**
+  - Codex name: `openaiDeveloperDocs`
+  - URL: `https://developers.openai.com/mcp`

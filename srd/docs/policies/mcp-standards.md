@@ -7,6 +7,20 @@ Goal: ensure Codex (CLI and IDE clients) can reliably use MCP servers with a con
 - Codex CLI MCP registry (recommended source of truth): `~/.codex/config.toml`
 - The **MCP stack** is the set of MCP servers declared in `~/.codex/config.toml` (local + public).
 
+## MCP server placement (portable default)
+
+- Code lives in its repo under `/srv/dev/<project>`.
+- Runtime lives under `/opt/<project>` (or `/opt/mcp` for shared runtimes).
+- Entrypoints live in `/usr/local/bin` (user tools) or `/usr/local/sbin` (services).
+- **Do not use `/opt/tools`.** That path is deprecated in portable standards.
+
+## Shared runtimes (preferred)
+
+- CPU runtime: `/opt/mcp/runtime-cpu/.venv`
+- GPU runtime: `/opt/mcp/runtime-gpu/.venv` (optional)
+
+MCP entrypoints should call the shared runtime (no per‑server venvs).
+
 ## Migration Preflight Checklist
 
 - Update Codex MCP registry: `~/.codex/config.toml`
@@ -81,7 +95,7 @@ Use client-side controls to enforce tool safety:
 When multiple tools can satisfy a request, follow this order:
 
 1) **Local KB first**: `ops-standards-srd` for standards/policies.
-2) **Local indexes**: `repo-docs`, `rpg-srd`, `vscode-etl` (whichever matches the corpus).
+2) **Local indexes**: `repo-docs`, `rpg-srd`, `vscode-etl` (only if installed).
 3) **Local web search**: `searxng` for discovery/search.
 4) **Web lookup**: `web.run` (citations or broader coverage) when SearxNG is weak or sources are required.
 5) **Rendered fetch**: `playwright` (if available) for JS-heavy pages or dynamic content.
