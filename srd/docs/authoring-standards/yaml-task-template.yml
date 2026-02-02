@@ -19,5 +19,6 @@ docs_discipline: []
 git_flow: []
 completion:
   summary: ""
+  decisions: []
   tests: []
   notes: []
